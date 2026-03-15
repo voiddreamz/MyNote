@@ -1,0 +1,254 @@
+{
+  "main": {
+    "id": "ef0cfe1de93c15bc",
+    "type": "split",
+    "children": [
+      {
+        "id": "5dd193fe56dc76eb",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "06e0b2da2d19e620",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "数理方程.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "数理方程"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "1873c960afabf660",
+    "type": "split",
+    "children": [
+      {
+        "id": "6f80506f53f5e2de",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "296ac3b482be23f1",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
+            }
+          },
+          {
+            "id": "4d922e1db24137e4",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "搜索"
+            }
+          },
+          {
+            "id": "4f8b34ccd79ab79a",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "书签"
+            }
+          },
+          {
+            "id": "97702010f655426a",
+            "type": "leaf",
+            "state": {
+              "type": "typst-tools",
+              "state": {},
+              "icon": "typst-stroke",
+              "title": "Typst Tools"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 225.5
+  },
+  "right": {
+    "id": "c9c552209f437c0c",
+    "type": "split",
+    "children": [
+      {
+        "id": "597a1d5687397d3f",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "71c0dc9ac8016873",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "电磁学.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "电磁学 的反向链接列表"
+            }
+          },
+          {
+            "id": "441044b21826bacd",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "物理/量子力学.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "量子力学 的出链列表"
+            }
+          },
+          {
+            "id": "fe6716d7fbc5630b",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
+            }
+          },
+          {
+            "id": "e3cee728af7a729b",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "添加笔记属性"
+            }
+          },
+          {
+            "id": "8db0dd00835f4325",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "物理/量子力学.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "量子力学 的大纲"
+            }
+          }
+        ],
+        "currentTab": 4
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "nutstore-sync:Start sync": false,
+      "nutstore-sync:Stop sync": false,
+      "bases:新建数据库": false,
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "obsidian-advanced-slides:Show Slide Preview": false,
+      "obsidian-excalidraw-plugin:新建绘图文件": false,
+      "excalidraw-cn:Create New Excalidraw File": false,
+      "pdf-plus:PDF++: Toggle auto-copy": false,
+      "pdf-plus:PDF++: Toggle auto-focus": false,
+      "pdf-plus:PDF++: Toggle auto-paste": false
+    }
+  },
+  "active": "06e0b2da2d19e620",
+  "lastOpenFiles": [
+    "微积分补充.md",
+    "复变函数.md",
+    "Pasted image 20260126152319.png",
+    "高数II.md",
+    "未命名 1.md",
+    "Ink/Drawing/2026.3.14 - 16.21pm.drawing",
+    "数理方程.md",
+    "随书记.md",
+    "Drawing 2026-03-14 14.38.45.excalidraw.md",
+    "handwritings",
+    "Xournalpp/come.xopp",
+    "Xournalpp",
+    "Drawing 2026-03-14 09.22.46.excalidraw.md",
+    "Ink/Drawing/2026.3.13 - 18.08pm.drawing",
+    "Ink/Drawing",
+    "Ink",
+    "复变函数.pdf",
+    "test.xopp",
+    "Drawing 2026-03-13 18.04.14.excalidraw.md",
+    "电磁学.md",
+    "矢量微积分基础.md",
+    "Drawing 2026-03-13 17.54.08.excalidraw.md",
+    "未命名.md",
+    "未命名.canvas",
+    "MATLAB.md",
+    "傅里叶变换、Delta函数和拉普拉斯变换.md",
+    "光学.md",
+    "分析力学.md",
+    "概率论.md",
+    "级数.md",
+    "狭义相对论.md",
+    "量子力学.md",
+    "Pasted image 20260126151714.png",
+    "Pasted image 20260126151704.png",
+    "题目收集.md",
+    "Pasted image 20260126132437.png",
+    "费曼物理学讲义学习.md",
+    "矢量微积分/Pasted image 20260110130457.png",
+    "矢量微积分",
+    "copilot/copilot-conversations/我的第四章内容只写了一部分。这是大学的物理专业的电磁学@20260115_185844.md",
+    "矢量微积分/Pasted image 20260110195555.png",
+    "矢量微积分/Pasted image 20260110130929.png",
+    "矢量微积分/Pasted image 20260110130506.png",
+    "]矢量微分基础.md",
+    "分析力学/Pasted image 20251230133045.png",
+    "分析力学/Pasted image 20251228103012.png"
+  ]
+}
