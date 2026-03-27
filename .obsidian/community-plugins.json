@@ -3,7 +3,6 @@
   "obsidian-mind-map",
   "obsidian-pandoc",
   "highlightr-plugin",
-  "easy-typing-obsidian",
   "nutstore-sync",
   "excalidraw-cn",
   "obsidian-excalidraw-plugin",
@@ -13,5 +12,11 @@
   "obsidian-relative-line-numbers",
   "periodic-notes",
   "obsidian-tasks-plugin",
-  "typst-mate"
+  "handwritten-notes",
+  "obsidian-latex-suite",
+  "typst-mate",
+  "homepage",
+  "dataview",
+  "obsidian-paste-image-rename",
+  "copilot"
 ]

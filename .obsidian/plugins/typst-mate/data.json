@@ -9,7 +9,7 @@
   "revertTabToDefault": false,
   "jumpOutsideBracket": true,
   "preferInlineExitForSingleLineDisplayMath": true,
-  "moveToEndOfMathBlockBeforeExiting": false,
+  "moveToEndOfMathBlockBeforeExiting": true,
   "disableMacro": false,
   "enableBackgroundRendering": true,
   "patchPDFExport": false,

@@ -1,42 +1,27 @@
 {
   "main": {
-    "id": "ef0cfe1de93c15bc",
+    "id": "5324373015726ba8",
     "type": "split",
     "children": [
       {
-        "id": "5dd193fe56dc76eb",
+        "id": "4509724f8bf84da7",
         "type": "tabs",
         "children": [
           {
-            "id": "06e0b2da2d19e620",
+            "id": "e7a7b303c61786dc",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "阅读有感/古文的力量.md",
+                "file": "物理/电磁学+电动力学/工程电磁学&电动力学补充笔记.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "古文的力量"
-            }
-          },
-          {
-            "id": "6940718fb72cf6ed",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "分析力学.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "分析力学"
+              "title": "工程电磁学&电动力学补充笔记"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -90,7 +75,7 @@
             }
           },
           {
-            "id": "97702010f655426a",
+            "id": "aa69bbe85ebbcbbd",
             "type": "leaf",
             "state": {
               "type": "typst-tools",
@@ -113,39 +98,6 @@
         "id": "597a1d5687397d3f",
         "type": "tabs",
         "children": [
-          {
-            "id": "71c0dc9ac8016873",
-            "type": "leaf",
-            "state": {
-              "type": "backlink",
-              "state": {
-                "file": "电磁学.md",
-                "collapseAll": false,
-                "extraContext": false,
-                "sortOrder": "alphabetical",
-                "showSearch": false,
-                "searchQuery": "",
-                "backlinkCollapsed": false,
-                "unlinkedCollapsed": true
-              },
-              "icon": "links-coming-in",
-              "title": "电磁学 的反向链接列表"
-            }
-          },
-          {
-            "id": "441044b21826bacd",
-            "type": "leaf",
-            "state": {
-              "type": "outgoing-link",
-              "state": {
-                "file": "物理/量子力学.md",
-                "linksCollapsed": false,
-                "unlinkedCollapsed": true
-              },
-              "icon": "links-going-out",
-              "title": "量子力学 的出链列表"
-            }
-          },
           {
             "id": "fe6716d7fbc5630b",
             "type": "leaf",
@@ -176,22 +128,54 @@
             }
           },
           {
-            "id": "8db0dd00835f4325",
+            "id": "bd971f0684aa1841",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "物理/电磁学+电动力学/工程电磁学&电动力学补充笔记.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "工程电磁学&电动力学补充笔记 的反向链接列表"
+            }
+          },
+          {
+            "id": "ca90e008e0e5cec5",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "出链"
+            }
+          },
+          {
+            "id": "04be8ad34c455625",
             "type": "leaf",
             "state": {
               "type": "outline",
               "state": {
-                "file": "物理/量子力学.md",
+                "file": "物理/电磁学+电动力学/工程电磁学&电动力学补充笔记.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "量子力学 的大纲"
+              "title": "工程电磁学&电动力学补充笔记 的大纲"
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 2
       }
     ],
     "direction": "horizontal",
@@ -200,6 +184,7 @@
   },
   "left-ribbon": {
     "hiddenItems": {
+      "homepage:Open homepage": false,
       "nutstore-sync:Start sync": false,
       "nutstore-sync:Stop sync": false,
       "bases:新建数据库": false,
@@ -214,57 +199,58 @@
       "excalidraw-cn:Create New Excalidraw File": false,
       "pdf-plus:PDF++: Toggle auto-copy": false,
       "pdf-plus:PDF++: Toggle auto-focus": false,
-      "pdf-plus:PDF++: Toggle auto-paste": false
+      "pdf-plus:PDF++: Toggle auto-paste": false,
+      "handwritten-notes:Create empty handwritten note": false,
+      "copilot:Open Copilot Chat": false
     }
   },
-  "active": "6940718fb72cf6ed",
+  "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "Ink/Drawing/2026.3.15 - 21.19pm.drawing",
-    "复变函数.md",
-    "Drawing 2026-03-15 20.14.51.excalidraw.md",
-    "阅读有感/古文的力量.md",
-    "excalidraw 26-03-15 08.05.52.ex",
-    "Ink/Drawing/2026.3.15 - 20.05pm.drawing",
-    "数理方程.md",
-    "阅读有感",
-    "微积分补充.md",
-    "Pasted image 20260126152319.png",
-    "高数II.md",
-    "未命名 1.md",
-    "Ink/Drawing/2026.3.14 - 16.21pm.drawing",
-    "随书记.md",
-    "Drawing 2026-03-14 14.38.45.excalidraw.md",
-    "handwritings",
-    "Xournalpp/come.xopp",
-    "Xournalpp",
-    "Drawing 2026-03-14 09.22.46.excalidraw.md",
-    "Ink/Drawing/2026.3.13 - 18.08pm.drawing",
+    "物理/电磁学+电动力学/电动力学.md",
+    "TODO LIST.md",
+    "水课笔记/传感器组成原理.md",
+    "物理/电磁学+电动力学/工程电磁学&电动力学补充笔记.md",
+    "数学/数理方程.md",
+    "阅读有感/杂谈.md",
+    "2026-03-24_19_28_55.png",
+    "Homepage.md",
+    "Ink/Drawing/2026.3.25 - 18.57pm.drawing",
+    "Ink/Drawing/2026.3.24 - 14.59pm.drawing",
+    "Ink/Drawing/2026.3.24 - 14.57pm.drawing",
+    "数学/矢量微积分基础.md",
+    "2026-03-24_19_57_19.png",
+    "2026-03-24_19_55_53.png",
+    "2026-03-24_19_53_48.png",
+    "2026-03-24_19_33_50.png",
+    "数学/复变函数.md",
     "Ink/Drawing",
     "Ink",
-    "Drawing 2026-03-13 18.04.14.excalidraw.md",
-    "电磁学.md",
-    "矢量微积分基础.md",
-    "Drawing 2026-03-13 17.54.08.excalidraw.md",
-    "未命名.md",
-    "未命名.canvas",
-    "MATLAB.md",
-    "傅里叶变换、Delta函数和拉普拉斯变换.md",
-    "光学.md",
-    "分析力学.md",
-    "概率论.md",
-    "级数.md",
-    "狭义相对论.md",
-    "量子力学.md",
-    "Pasted image 20260126151714.png",
-    "Pasted image 20260126151704.png",
-    "题目收集.md",
-    "Pasted image 20260126132437.png",
-    "费曼物理学讲义学习.md",
-    "矢量微积分/Pasted image 20260110130457.png",
-    "矢量微积分/Pasted image 20260110195555.png",
-    "矢量微积分/Pasted image 20260110130929.png",
-    "矢量微积分/Pasted image 20260110130506.png",
-    "分析力学/Pasted image 20251230133045.png",
-    "分析力学/Pasted image 20251228103012.png"
+    "水课笔记/科学前沿讲座.md",
+    "2025-03-21.md",
+    "images/电磁学/maxwell.png",
+    "images/电磁学/2026-03-24_11_17_33.png",
+    "images/传感器原理/IMG_20260319_135644 1.jpg",
+    "images/传感器原理/IMG_20260319_135546 1.jpg",
+    "Untitled.typ",
+    "物理/电磁学+电动力学/电磁学.md",
+    "images/传感器原理/IMG_20260319_150210 1.jpg",
+    "images/传感器原理",
+    "Handwrites/Drawing 2026-03-16 11.12.27.excalidraw.md",
+    "banyan_config/editor_placeholder.md",
+    "水课笔记",
+    "数学/泛函分析.md",
+    "excalidraw 26-03-17 02.33.05.ex",
+    "Drawing 2026-03-15 20.14.51.excalidraw.md",
+    "数学/级数.md",
+    "数学/高数II.md",
+    "copilot/copilot-custom-prompts/Clip Web Page.md",
+    "copilot/copilot-custom-prompts/Clip YouTube Transcript.md",
+    "copilot/copilot-custom-prompts/Rewrite as tweet thread.md",
+    "copilot/copilot-custom-prompts/Rewrite as tweet.md",
+    "copilot/copilot-custom-prompts/Remove URLs.md",
+    "copilot/copilot-custom-prompts/Generate glossary.md",
+    "copilot/copilot-custom-prompts/Generate table of contents.md",
+    "copilot/copilot-custom-prompts",
+    "未命名.canvas"
   ]
 }
