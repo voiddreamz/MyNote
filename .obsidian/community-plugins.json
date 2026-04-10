@@ -1,22 +1,13 @@
 [
-  "obsidian-advanced-slides",
-  "obsidian-mind-map",
-  "obsidian-pandoc",
-  "highlightr-plugin",
   "nutstore-sync",
-  "excalidraw-cn",
-  "obsidian-excalidraw-plugin",
-  "pdf-plus",
   "ink",
   "obsidian-vimrc-support",
-  "obsidian-relative-line-numbers",
-  "periodic-notes",
-  "obsidian-tasks-plugin",
-  "handwritten-notes",
   "obsidian-latex-suite",
   "typst-mate",
+  "highlightr-plugin",
+  "obsidian-mind-map",
   "homepage",
-  "dataview",
-  "obsidian-paste-image-rename",
-  "copilot"
+  "obsidian-tasks-plugin",
+  "obsidian-advanced-slides",
+  "easy-typing-obsidian"
 ]

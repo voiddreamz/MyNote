@@ -1,9 +1,9 @@
 {
   "cssTheme": "Baseline",
-  "theme": "moonstone",
-  "interfaceFontFamily": "HONORSansCN Nerd Font,Source Han Sans CN",
-  "textFontFamily": "HONORSansCN Nerd Font",
-  "baseFontSize": 20,
+  "theme": "obsidian",
+  "interfaceFontFamily": "Source Han Sans CN,HONORSansCN Nerd Font",
+  "textFontFamily": "Source Han Serif CN,Source Han Sans CN,HONORSansCN Nerd Font",
+  "baseFontSize": 22,
   "baseFontSizeAction": false,
   "monospaceFontFamily": "Fira Math"
 }
