@@ -1,0 +1,116 @@
+{
+  "fileType": "wdeck",
+  "logicalDeckId": "deck_molkg23z",
+  "logicalDeckName": "默认牌组",
+  "segmentId": "默认牌组_01",
+  "segmentIndex": 1,
+  "segmentLabel": "01",
+  "deck": {
+    "id": "deck_molkg23z",
+    "name": "默认牌组",
+    "description": "",
+    "category": "默认",
+    "path": "默认牌组",
+    "level": 0,
+    "order": 0,
+    "inheritSettings": false,
+    "settings": {
+      "newCardsPerDay": 20,
+      "maxReviewsPerDay": 100,
+      "enableAutoAdvance": true,
+      "showAnswerTime": 0,
+      "fsrsParams": {
+        "w": [
+          0.212,
+          1.2931,
+          2.3065,
+          8.2956,
+          6.4133,
+          0.8334,
+          3.0194,
+          0.001,
+          1.8722,
+          0.1666,
+          0.796,
+          1.4835,
+          0.0614,
+          0.2629,
+          1.6483,
+          0.6014,
+          1.8729,
+          0.5425,
+          0.0912,
+          0.0658,
+          0.1542
+        ],
+        "requestRetention": 0.9,
+        "maximumInterval": 36500,
+        "enableFuzz": true
+      },
+      "learningSteps": [
+        1,
+        10
+      ],
+      "relearningSteps": [
+        10
+      ],
+      "graduatingInterval": 1,
+      "easyInterval": 4
+    },
+    "stats": {
+      "totalCards": 1,
+      "newCards": 0,
+      "learningCards": 0,
+      "reviewCards": 0,
+      "todayNew": 0,
+      "todayReview": 0,
+      "todayTime": 0,
+      "totalReviews": 0,
+      "totalTime": 0,
+      "memoryRate": 0,
+      "averageEase": 0,
+      "forecastDays": {}
+    },
+    "includeSubdecks": false,
+    "deckType": "mixed",
+    "purpose": "memory",
+    "created": "2026-04-30T14:15:17.421Z",
+    "modified": "2026-05-15T01:53:20.463Z",
+    "tags": [],
+    "metadata": {},
+    "categoryIds": [
+      "basic"
+    ]
+  },
+  "cards": [
+    {
+      "uuid": "tk-mw5f5ccd6d6n",
+      "content": "---\nwe_decks:\n  - 默认牌组\nwe_type: basic\ncreated: \"2026-04-30T14:15:17.421Z\"\n---\nObsidian 是什么？\n\n---div---\n\nObsidian 是一款强大的知识管理和笔记软件，支持双向链接和插件扩展。",
+      "type": "basic",
+      "tags": [
+        "入门"
+      ],
+      "created": "2026-04-30T14:15:17.421Z",
+      "modified": "2026-04-30T14:15:17.490Z",
+      "fsrs": {
+        "due": "2026-04-30T14:15:17.489Z",
+        "stability": 0,
+        "difficulty": 3.9130999999999996,
+        "elapsedDays": 0,
+        "scheduledDays": 0,
+        "reps": 0,
+        "lapses": 0,
+        "state": 0,
+        "retrievability": 1
+      },
+      "reviewHistory": [],
+      "stats": {
+        "totalReviews": 0,
+        "totalTime": 0,
+        "averageTime": 0,
+        "memoryRate": 0
+      }
+    }
+  ],
+  "schemaVersion": 1
+}

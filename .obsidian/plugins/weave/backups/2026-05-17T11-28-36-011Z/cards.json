@@ -1,0 +1,42 @@
+[
+  {
+    "uuid": "tk-mw5f5ccd6d6n",
+    "content": "---\nwe_decks:\n  - 默认牌组\nwe_type: basic\ncreated: \"2026-04-30T14:15:17.421Z\"\n---\nObsidian 是什么？\n\n---div---\n\nObsidian 是一款强大的知识管理和笔记软件，支持双向链接和插件扩展。",
+    "type": "basic",
+    "tags": [],
+    "created": "2026-04-30T14:15:17.421Z",
+    "modified": "2026-04-30T14:15:17.490Z",
+    "fsrs": {
+      "due": "2026-04-30T14:15:17.489Z",
+      "stability": 0,
+      "difficulty": 3.9130999999999996,
+      "elapsedDays": 0,
+      "scheduledDays": 0,
+      "reps": 0,
+      "lapses": 0,
+      "state": 0,
+      "retrievability": 1
+    },
+    "reviewHistory": [],
+    "stats": {
+      "totalReviews": 0,
+      "totalTime": 0,
+      "averageTime": 0,
+      "memoryRate": 0
+    },
+    "deckId": "wdeck:deck_molkg23z",
+    "referencedByDecks": [
+      "wdeck:deck_molkg23z"
+    ],
+    "customFields": {
+      "wdeck": {
+        "runtimeDeckId": "wdeck:deck_molkg23z",
+        "logicalDeckId": "deck_molkg23z",
+        "logicalDeckName": "默认牌组",
+        "segmentId": "默认牌组_01",
+        "segmentIndex": 1,
+        "sourcePath": "weave/memory/deck-files/默认牌组_01.wdeck"
+      }
+    }
+  }
+]

@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "物理/分析力学.md",
+                "file": "物理/光学.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "分析力学"
+              "title": "光学"
             }
           }
         ]
@@ -45,6 +45,21 @@
               },
               "icon": "lucide-folder-closed",
               "title": "文件列表"
+            }
+          },
+          {
+            "id": "04be8ad34c455625",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "物理/光学.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "光学 的大纲"
             }
           },
           {
@@ -83,12 +98,22 @@
               "icon": "typst-stroke",
               "title": "Typst Tools"
             }
+          },
+          {
+            "id": "962bbf1197e4317f",
+            "type": "leaf",
+            "state": {
+              "type": "weave-epub-sidebar",
+              "state": {},
+              "icon": "lucide-ghost",
+              "title": "weave-epub-sidebar"
+            }
           }
         ]
       }
     ],
     "direction": "horizontal",
-    "width": 225.5
+    "width": 277.5096130371094
   },
   "right": {
     "id": "c9c552209f437c0c",
@@ -133,7 +158,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "物理/电磁学+电动力学/工程电磁学&电动力学补充笔记.md",
+                "file": "English/English words.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -143,7 +168,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "工程电磁学&电动力学补充笔记 的反向链接列表"
+              "title": "English words 的反向链接列表"
             }
           },
           {
@@ -152,34 +177,19 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "English/English words.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "出链"
-            }
-          },
-          {
-            "id": "04be8ad34c455625",
-            "type": "leaf",
-            "state": {
-              "type": "outline",
-              "state": {
-                "file": "物理/电磁学+电动力学/工程电磁学&电动力学补充笔记.md",
-                "followCursor": false,
-                "showSearch": false,
-                "searchQuery": ""
-              },
-              "icon": "lucide-list",
-              "title": "工程电磁学&电动力学补充笔记 的大纲"
+              "title": "English words 的出链列表"
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "horizontal",
-    "width": 300,
+    "width": 325.5,
     "collapsed": true
   },
   "left-ribbon": {
@@ -191,60 +201,59 @@
       "switcher:打开快速切换": false,
       "graph:查看关系图谱": false,
       "canvas:新建白板": false,
+      "command-palette:打开命令面板": false,
       "daily-notes:打开/创建今天的日记": false,
       "templates:插入模板": false,
-      "command-palette:打开命令面板": false,
-      "obsidian-advanced-slides:Show Slide Preview": false
+      "obsidian42-brat:BRAT": false
     }
   },
   "active": "e7a7b303c61786dc",
   "lastOpenFiles": [
-    "TODO LIST.md",
-    "物理/分析力学.md",
-    "数学/变分.md",
-    "数学/数理方程.md",
-    "物理/狭义相对论.md",
-    "物理/工科类分析力学.md",
     "物理/电磁学+电动力学/工程电磁学&电动力学补充笔记.md",
-    "数学/复变函数.pdf",
-    "物理/电磁学+电动力学/电动力学.md",
-    "temp.md",
     "物理/光学.md",
-    "相对论的数学基础？（暂定）.md",
-    "物理/经典场论.md",
-    "物理/电磁学+电动力学/电磁学的额外推导.md",
-    "物理/对称.md",
-    "物理/量子力学.md",
-    "题目收集.md",
-    "变分法与分析力学.md",
-    "数学/矢量微积分基础.md",
+    "物理/电磁学+电动力学/电动力学.md",
+    "主体性.md",
+    "Ink/Drawing/2026.5.18 - 9.15am.drawing",
+    "TODO LIST.md",
+    "未命名.md",
+    "物理/分析力学.md",
+    "物理/场论.md",
+    "物理/工科类分析力学.md",
+    "物理/狭义相对论.md",
     "物理/电磁学+电动力学/电磁学.md",
-    "关于电磁场的拉格朗日量和诺特定理.md",
-    "物理/电磁学+电动力学/电磁学_typst_final.md",
-    "物理/电磁学+电动力学/电磁学_simple_typst.md",
+    "数学/变分.md",
+    "Ink/Drawing/2026.5.14 - 22.23pm.drawing",
+    "物理/电磁学+电动力学/电磁学的额外推导.md",
+    "数学/数理方程.md",
+    "数学/Untitled.typ",
+    "Ink/Drawing/2026.5.14 - 18.08pm.drawing",
+    "Ink/Drawing/2026.5.14 - 18.03pm.drawing",
+    "Ink/Drawing/2026.5.14 - 17.49pm.drawing",
+    "Ink/Drawing/2026.5.13 - 22.11pm.drawing",
+    "Ink/Drawing/2026.5.13 - 20.14pm.drawing",
+    "未命名 1.md",
+    "Ink/Drawing/2026.5.13 - 18.07pm.drawing",
+    "weave/README.md",
+    "Ink/Drawing/2026.5.13 - 15.00pm.drawing",
+    "数学/级数.md",
+    "temp.md",
+    "English/English words.md",
+    "数学/矢量微积分基础.md",
+    "数学/Linear Algebra for Physics.md",
+    "weave-editor-tk-msruru3ajshe-inline-1777461923995-4doqvzht0gi.md",
+    "物理/weave-editor-tk-msrfr9g3gs37-inline-1777461565957-0sgi1ngi7lr.md",
+    "English/Translations.md",
     "物理/电磁学+电动力学/电磁学_final.md",
-    "物理/电磁学+电动力学/电磁学_typst.md",
-    "物理/电磁学+电动力学/电磁学_temp13.md",
-    "物理/电磁学+电动力学/电磁学_temp12.md",
-    "物理/电磁学+电动力学/电磁学.md.backup",
-    "Ink/Drawing/2026.3.30 - 11.05am.drawing",
+    "images/电磁学/dmou.png",
+    "images/电磁学/2026-04-28_10_22_33.png",
+    "images/电磁学/电偶.png",
+    "images/电磁学/2026-04-28_08_59_21.png",
+    "images/场论/sametime.png",
+    "images/场论/2026-04-26_18_00_57.png",
     "images/电磁学/2026-03-24_19_28_55.png",
     "images/电磁学/2026-03-24_19_33_50.png",
     "images/电磁学/2026-03-24_19_57_19.png",
     "images/电磁学/2026-03-24_19_53_48.png",
-    "Ink/Drawing/2026.3.25 - 18.57pm.drawing",
-    "Ink/Drawing/2026.3.24 - 14.59pm.drawing",
-    "Ink/Drawing/2026.3.24 - 14.57pm.drawing",
-    "images/电磁学/2026-03-24_19_55_53.png",
-    "Ink/Drawing",
-    "Ink",
-    "images/电磁学/maxwell.png",
-    "images/电磁学/2026-03-24_11_17_33.png",
-    "images/传感器原理/IMG_20260319_135644 1.jpg",
-    "images/传感器原理/IMG_20260319_135546 1.jpg",
-    "Untitled.typ",
-    "images/传感器原理/IMG_20260319_150210 1.jpg",
-    "images/传感器原理",
     "未命名.canvas"
   ]
 }

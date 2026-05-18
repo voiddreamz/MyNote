@@ -1,0 +1,480 @@
+{
+  "defaultDeck": "默认牌组",
+  "reviewsPerDay": 20,
+  "newCardsPerDay": 20,
+  "enableNotifications": true,
+  "theme": "auto",
+  "language": "zh-CN",
+  "autoShowAnswerSeconds": 0,
+  "learningSteps": [
+    1,
+    10
+  ],
+  "relearningSteps": [
+    10
+  ],
+  "graduatingInterval": 1,
+  "maxAdvanceDays": 7,
+  "enableShortcuts": true,
+  "showFloatingCreateButton": false,
+  "autoBackupConfig": {
+    "enabled": true,
+    "intervalHours": 24,
+    "triggers": {
+      "onStartup": true,
+      "onCardThreshold": true,
+      "cardThresholdCount": 100
+    },
+    "notifications": {
+      "onSuccess": true,
+      "onFailure": true
+    },
+    "lastAutoBackupTime": "2026-05-14T12:42:35.101Z",
+    "autoBackupCount": 7
+  },
+  "multipleChoiceStats": {
+    "totalQuestions": 0,
+    "correctAnswers": 0,
+    "totalAttempts": 0,
+    "lastUpdated": "2026-04-29T11:18:23.108Z"
+  },
+  "navigationVisibility": {
+    "deckStudy": true,
+    "cardManagement": true,
+    "incrementalReading": true,
+    "aiAssistant": true,
+    "apkgImport": true,
+    "csvImport": true,
+    "clipboardImport": true
+  },
+  "showSettingsButton": true,
+  "epubBookshelf": {
+    "lastScanAt": 0
+  },
+  "studyViewSpacing": "compact",
+  "weaveParentFolder": "",
+  "enablePersonalization": true,
+  "personalizationSettings": {
+    "enabled": true,
+    "minDataPoints": 50,
+    "enableBacktracking": true,
+    "checkpointInterval": 50,
+    "performanceThreshold": 0.1,
+    "autoOptimization": true
+  },
+  "editorModalSize": {
+    "rememberLastSize": true,
+    "enableResize": true
+  },
+  "deckCardStyle": "default",
+  "mainInterfaceOpenLocation": "sidebar",
+  "queueOptimization": {
+    "learningSteps": {
+      "enabled": true,
+      "steps": [
+        1,
+        10
+      ],
+      "maxFailures": 5,
+      "showProgressIndicator": true
+    },
+    "interleaving": {
+      "enabled": true,
+      "mode": "smart",
+      "respectPriority": true,
+      "minGroupSize": 3,
+      "maxConsecutiveSameTag": 2
+    },
+    "difficultyTracking": {
+      "enabled": true,
+      "showIndicator": true,
+      "autoTag": true,
+      "interventionThreshold": 2,
+      "trendAnalysisWindow": 5
+    },
+    "priority": {
+      "enableUserPriority": true,
+      "enableDifficultyAdjustment": true,
+      "enableLeechBoost": true
+    }
+  },
+  "enableDirectDelete": false,
+  "showClozeModeSwitchButton": true,
+  "hintMaxUses": 5,
+  "license": {
+    "activationCode": "",
+    "isActivated": false,
+    "activatedAt": "",
+    "deviceFingerprint": "",
+    "expiresAt": "",
+    "productVersion": "",
+    "licenseType": "lifetime",
+    "entitlements": [],
+    "source": "local"
+  },
+  "licenseState": {
+    "localLicenses": []
+  },
+  "fsrsParams": {
+    "w": [
+      0.212,
+      1.2931,
+      2.3065,
+      8.2956,
+      6.4133,
+      0.8334,
+      3.0194,
+      0.001,
+      1.8722,
+      0.1666,
+      0.796,
+      1.4835,
+      0.0614,
+      0.2629,
+      1.6483,
+      0.6014,
+      1.8729,
+      0.5425,
+      0.0912,
+      0.0658,
+      0.1542
+    ],
+    "requestRetention": 0.9,
+    "maximumInterval": 365,
+    "enableFuzz": true,
+    "optimizationHistory": []
+  },
+  "simplifiedParsing": {
+    "enableTagTrigger": true,
+    "triggerTag": "#weave",
+    "symbols": {
+      "cardDelimiter": "<->",
+      "faceDelimiter": "---div---",
+      "clozeMarker": "=="
+    },
+    "batchParsing": {
+      "autoCreateBlockLinks": false,
+      "autoSetSourceFile": true,
+      "blockIdPrefix": "weave",
+      "insertMetadata": false,
+      "autoTrigger": false,
+      "triggerDebounce": 2000,
+      "onlyActiveFile": true,
+      "includeFolders": [],
+      "excludeFolders": [
+        ".obsidian",
+        ".trash",
+        "node_modules",
+        ".git"
+      ],
+      "maxFilesPerBatch": 50,
+      "defaultPriority": 0,
+      "folderDeckMappings": [],
+      "autoSync": {
+        "enabled": false,
+        "watchActiveFile": true,
+        "debounceDelay": 2000,
+        "onlyInMappedFolders": true
+      },
+      "conflictResolution": {
+        "defaultStrategy": "ask-user",
+        "showConflictNotification": true
+      },
+      "excludeTags": [
+        "skip"
+      ],
+      "forceSyncTags": [
+        "自动同步"
+      ]
+    },
+    "enableTemplateSystem": true,
+    "templates": [],
+    "defaultTemplateId": "official-qa"
+  },
+  "migrationCompleted": false,
+  "editor": {
+    "linkStyle": "wikilink",
+    "linkPath": "short",
+    "preferAlias": true,
+    "attachmentDir": "Weave Assets",
+    "embedImages": true
+  },
+  "cardManager": {
+    "visibleFields": {
+      "table": {
+        "front": true,
+        "back": true,
+        "status": true,
+        "due": true,
+        "difficulty": true,
+        "priority": true,
+        "tags": true,
+        "deck": true,
+        "backlink": true,
+        "actions": true
+      },
+      "grid": {
+        "tags": true,
+        "priority": true,
+        "deck": true,
+        "backlink": true
+      }
+    },
+    "sort": {
+      "primary": {
+        "field": "due",
+        "order": "asc"
+      },
+      "secondary": null
+    },
+    "defaultFilters": {
+      "tag": "",
+      "status": ""
+    }
+  },
+  "clozeSettings": {
+    "enabled": true,
+    "openDelimiter": "==",
+    "closeDelimiter": "==",
+    "placeholder": "[...]"
+  },
+  "mediaAutoPlay": {
+    "enabled": false,
+    "mode": "first",
+    "timing": "cardChange",
+    "playbackInterval": 2000
+  },
+  "enableDebugMode": false,
+  "showPerformanceSettings": true,
+  "repairTool": {
+    "repairScope": "current-file",
+    "repairMissingBlockIds": true,
+    "repairMissingUUIDs": true,
+    "repairMissingTimestamps": true,
+    "repairMalformedCallouts": true,
+    "createBackupBeforeRepair": false,
+    "confirmBeforeBatchRepair": true,
+    "blockIdGenerationStrategy": "random",
+    "timestampStrategy": "current"
+  },
+  "ankiConnect": {
+    "enabled": false,
+    "endpoint": "http://localhost:8765",
+    "mediaSync": {
+      "enabled": true,
+      "largeFileThresholdMB": 10,
+      "supportedTypes": [
+        "png",
+        "jpg",
+        "jpeg",
+        "gif",
+        "mp3",
+        "mp4"
+      ],
+      "createBacklinks": true
+    },
+    "autoSync": {
+      "enabled": false,
+      "intervalMinutes": 30,
+      "syncOnStartup": false,
+      "onlyWhenAnkiRunning": true,
+      "prioritizeRecent": true
+    },
+    "deckMappings": {},
+    "templateMappings": {},
+    "tutorialCompleted": false,
+    "tutorialStep": 0
+  },
+  "aiConfig": {
+    "apiKeys": {
+      "openai": {
+        "apiKey": "",
+        "model": "gpt-5-mini",
+        "verified": false
+      },
+      "gemini": {
+        "apiKey": "",
+        "model": "gemini-2.5-flash",
+        "verified": false
+      },
+      "anthropic": {
+        "apiKey": "",
+        "model": "claude-3-7-sonnet-latest",
+        "verified": false
+      },
+      "deepseek": {
+        "apiKey": "",
+        "model": "deepseek-chat",
+        "verified": false
+      },
+      "zhipu": {
+        "apiKey": "",
+        "model": "glm-4-flash",
+        "verified": false
+      },
+      "siliconflow": {
+        "apiKey": "",
+        "model": "Qwen/Qwen3-32B",
+        "verified": false
+      },
+      "xai": {
+        "apiKey": "",
+        "model": "grok-3",
+        "verified": false
+      }
+    },
+    "defaultProvider": "zhipu",
+    "formatting": {
+      "enabled": true
+    },
+    "globalParams": {
+      "temperature": 0.7,
+      "maxTokens": 2000,
+      "requestTimeout": 30,
+      "concurrentLimit": 3
+    },
+    "systemPromptConfig": {
+      "useBuiltin": true,
+      "customPrompt": "",
+      "customSystemPrompts": []
+    },
+    "promptTemplates": {
+      "official": [
+        {
+          "id": "standard-qa",
+          "name": "标准问答生成",
+          "prompt": "请根据以下内容生成{count}张问答卡片，难度为{difficulty}。要求问题简洁明确，答案完整准确。",
+          "useBuiltinSystemPrompt": true,
+          "description": "适用于一般性学习材料，生成标准问答卡片，包含多种题型",
+          "variables": [
+            "count",
+            "difficulty",
+            "template"
+          ],
+          "createdAt": "2026-04-29T11:18:23.107Z"
+        },
+        {
+          "id": "concept-explain",
+          "name": "概念解释型",
+          "prompt": "请提取关键概念并生成解释型卡片，包含定义、特点、应用场景。",
+          "useBuiltinSystemPrompt": true,
+          "description": "专注于概念理解，生成定义类、解释类卡片",
+          "variables": [
+            "count"
+          ],
+          "createdAt": "2026-04-29T11:18:23.107Z"
+        },
+        {
+          "id": "deep-understanding",
+          "name": "深度理解型",
+          "prompt": "生成需要深度思考的卡片，重点考察理解、分析、应用能力。避免简单记忆型问题。",
+          "useBuiltinSystemPrompt": true,
+          "description": "生成高阶思维卡片，强调理解和应用",
+          "variables": [
+            "count",
+            "difficulty"
+          ],
+          "createdAt": "2026-04-29T11:18:23.107Z"
+        },
+        {
+          "id": "cloze-fill",
+          "name": "挖空填充型",
+          "prompt": "生成挖空题，使用{{c1::}}语法标记关键词。每张卡片1-3个挖空点。",
+          "useBuiltinSystemPrompt": true,
+          "description": "专注于生成挖空题，适合记忆关键术语和概念",
+          "variables": [
+            "count"
+          ],
+          "createdAt": "2026-04-29T11:18:23.107Z"
+        }
+      ],
+      "custom": []
+    },
+    "cardSplitting": {
+      "enabled": true,
+      "defaultTargetCount": 0,
+      "minContentLength": 100,
+      "maxContentLength": 5000,
+      "autoInheritTags": true,
+      "autoInheritSource": true,
+      "requireConfirmation": true,
+      "defaultInstruction": ""
+    },
+    "customFormatActions": [],
+    "customSplitActions": [],
+    "officialFormatActions": {
+      "choice": {
+        "enabled": true
+      },
+      "mathFormula": {
+        "enabled": true
+      },
+      "memoryAid": {
+        "enabled": true
+      }
+    }
+  },
+  "deckTagGroups": [],
+  "memoryDeckOrganization": {
+    "enabled": true,
+    "minCandidateCardCount": 2,
+    "tagDriftFollowMode": "ask",
+    "activeRuleGroupId": "default",
+    "ruleGroups": [
+      {
+        "id": "default",
+        "name": "默认规则组",
+        "minCandidateCardCount": 2,
+        "onlyLearnableDecks": false,
+        "requiredTags": [],
+        "excludedTags": [],
+        "sourceFolders": [],
+        "priorityMin": null,
+        "priorityMax": null,
+        "createdAfter": null,
+        "createdBefore": null
+      }
+    ]
+  },
+  "loadBalance": {
+    "dailyCapacity": 100,
+    "thresholds": {
+      "low": 0.5,
+      "normal": 0.8,
+      "high": 1.2
+    },
+    "fuzzMethod": "uniform",
+    "fuzzRangeDays": 2,
+    "forecast": {
+      "defaultDays": 14,
+      "maxDays": 30
+    }
+  },
+  "autoCheckDataConsistency": false,
+  "incrementalReading": {
+    "defaultIntervalFactor": 1.5,
+    "dailyNewLimit": 20,
+    "dailyReviewLimit": 50,
+    "defaultSplitLevel": 2,
+    "interleaveMode": true,
+    "maxConsecutiveSameTopic": 3,
+    "reviewThreshold": 7,
+    "maxInterval": 365,
+    "importFolder": "weave/incremental-reading/IR",
+    "appendSourceDocumentBacklinkOnSplitImport": false,
+    "scheduleStrategy": "processing",
+    "dailyTimeBudgetMinutes": 40,
+    "maxAppearancesPerDay": 2,
+    "enableTagGroupPrior": true,
+    "agingStrength": "low",
+    "autoPostponeStrategy": "gentle",
+    "priorityHalfLifeDays": 7,
+    "learnAheadDays": 3,
+    "folderSubscription": {
+      "rules": [],
+      "initialScheduleMode": "today",
+      "importConfirmThreshold": 20
+    }
+  },
+  "pinnedDecks": []
+}

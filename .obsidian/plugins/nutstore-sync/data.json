@@ -8,6 +8,7 @@
   "oauthResponseText": "u-d-m8ZEMVO6Pz27Yq3d5lexFiUXWk650h5zh0ru_mLkoWqwDmDSKJCXk9l0xZ62lNJMbRmNEb2AMpemKRrhDOD3VH3a-Hb5N4trM2C-8Bq6kZI5vLav3YxcWBFzy5cV0zDcWfVXgGXyTqjacmcbB7TecSUGeHnPxkDtOcT9J8C0lJlBSBs",
   "loginMode": "sso",
   "confirmBeforeSync": true,
+  "confirmBeforeDeleteInAutoSync": true,
   "syncMode": "loose",
   "filterRules": {
     "exclusionRules": [
@@ -31,6 +32,12 @@
       },
       {
         "expr": "**/copilot",
+        "options": {
+          "caseSensitive": false
+        }
+      },
+      {
+        "expr": "**/books",
         "options": {
           "caseSensitive": false
         }

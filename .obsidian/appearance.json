@@ -1,8 +1,8 @@
 {
-  "cssTheme": "Baseline",
-  "theme": "obsidian",
+  "cssTheme": "Phycat",
+  "theme": "moonstone",
   "interfaceFontFamily": "Source Han Sans CN,HONORSansCN Nerd Font",
-  "textFontFamily": "Source Han Serif CN,Source Han Sans CN,HONORSansCN Nerd Font",
+  "textFontFamily": "Source Han Sans CN,Source Han Serif CN,HONORSansCN Nerd Font",
   "baseFontSize": 22,
   "baseFontSizeAction": false,
   "monospaceFontFamily": "Fira Math"

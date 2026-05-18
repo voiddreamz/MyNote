@@ -1,0 +1,6 @@
+{
+  "phycat-layout@@layout-style": "layout-default",
+  "phycat-colors@@light-color-scheme": "theme-light-forest",
+  "phycat-colors@@dark-color-scheme": "theme-dark-abyss",
+  "phycat-layout@@rainbow-folders": true
+}

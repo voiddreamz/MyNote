@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "fileType": "wdeck",
+  "logicalDeckId": "未归组卡片",
+  "logicalDeckName": "未归组卡片",
+  "segmentId": "未归组卡片_01",
+  "segmentIndex": 1,
+  "segmentLabel": "01",
+  "deck": {
+    "id": "未归组卡片",
+    "name": "未归组卡片",
+    "purpose": "memory",
+    "created": "2026-04-29T11:27:17.143Z",
+    "modified": "2026-04-29T11:27:17.143Z",
+    "metadata": {}
+  },
+  "cards": []
+}
