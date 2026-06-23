@@ -29,8 +29,8 @@
       "onSuccess": true,
       "onFailure": true
     },
-    "lastAutoBackupTime": "2026-05-17T11:28:36.089Z",
-    "autoBackupCount": 8
+    "lastAutoBackupTime": "2026-06-21T02:15:30.365Z",
+    "autoBackupCount": 19
   },
   "multipleChoiceStats": {
     "totalQuestions": 0,
@@ -50,15 +50,6 @@
   "showSettingsButton": true,
   "studyViewSpacing": "compact",
   "weaveParentFolder": "",
-  "enablePersonalization": true,
-  "personalizationSettings": {
-    "enabled": true,
-    "minDataPoints": 50,
-    "enableBacktracking": true,
-    "checkpointInterval": 50,
-    "performanceThreshold": 0.1,
-    "autoOptimization": true
-  },
   "editorModalSize": {
     "preset": "large",
     "customWidth": 800,
@@ -69,6 +60,7 @@
   "cardManagementViewPreferences": {
     "currentView": "table",
     "gridLayout": "fixed",
+    "gridCardBorderStyle": "solid",
     "gridCardAttribute": "uuid",
     "kanbanGroupBy": "status",
     "kanbanGroupByBySource": {
@@ -94,10 +86,13 @@
     "cardOrder": "sequential",
     "choiceOptionOrder": "sequential",
     "sidebarPosition": "right",
-    "ratingLabelStyle": "classic"
+    "ratingLabelStyle": "classic",
+    "showRatingIntervalOnButtons": false,
+    "graphLinkEnabled": false
   },
   "deckCardStyle": "default",
   "mainInterfaceOpenLocation": "sidebar",
+  "deckStudyAutoViewByLocationEnabled": true,
   "queueOptimization": {
     "learningSteps": {
       "enabled": true,
@@ -134,6 +129,8 @@
     "lastSelectedDeckNames": []
   },
   "showClozeModeSwitchButton": true,
+  "startupDataCheckMode": "smart",
+  "enableStartupDataManagementGate": true,
   "hintMaxUses": 5,
   "license": {
     "activationCode": "",
@@ -223,7 +220,30 @@
     },
     "enableTemplateSystem": true,
     "templates": [],
-    "defaultTemplateId": "official-qa"
+    "defaultTemplateId": "official-qa",
+    "regexPresets": [
+      {
+        "id": "official-qa-format",
+        "name": "官方 Q&A 正则模板",
+        "description": "内置 Q/A 正则：用 Q: 与 A: 标记正反面，cardPattern 一次匹配全文中的多张卡片（设置页可测试解析）",
+        "mode": "pattern",
+        "patternMode": {
+          "cardPattern": "Q\\s*[:：]\\s*(.+?)\\s*A\\s*[:：]\\s*(.+?)(?=\\n\\s*Q\\s*[:：]|$)",
+          "flags": "gs",
+          "captureGroups": {
+            "front": 1,
+            "back": 2
+          }
+        },
+        "uuidLocation": "inline",
+        "uuidPattern": "<!-- (tk-[a-z0-9]{12}) -->",
+        "excludeTags": [
+          "禁止同步"
+        ],
+        "autoAddUUID": true,
+        "syncMethod": "tag-based"
+      }
+    ]
   },
   "migrationCompleted": false,
   "editor": {
@@ -569,5 +589,10 @@
   "pinnedDecks": [],
   "epubBookshelf": {
     "lastScanAt": 0
+  },
+  "startupDataGateBaseline": {
+    "fingerprint": "clean",
+    "passedAt": "2026-06-21T02:15:29.390Z",
+    "pluginVersion": "0.8.28"
   }
 }

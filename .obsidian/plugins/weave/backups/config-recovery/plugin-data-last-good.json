@@ -29,8 +29,8 @@
       "onSuccess": true,
       "onFailure": true
     },
-    "lastAutoBackupTime": "2026-05-14T12:42:35.101Z",
-    "autoBackupCount": 7
+    "lastAutoBackupTime": "2026-06-17T12:24:36.337Z",
+    "autoBackupCount": 18
   },
   "multipleChoiceStats": {
     "totalQuestions": 0,
@@ -48,26 +48,15 @@
     "clipboardImport": true
   },
   "showSettingsButton": true,
-  "epubBookshelf": {
-    "lastScanAt": 0
-  },
   "studyViewSpacing": "compact",
   "weaveParentFolder": "",
-  "enablePersonalization": true,
-  "personalizationSettings": {
-    "enabled": true,
-    "minDataPoints": 50,
-    "enableBacktracking": true,
-    "checkpointInterval": 50,
-    "performanceThreshold": 0.1,
-    "autoOptimization": true
-  },
   "editorModalSize": {
     "rememberLastSize": true,
     "enableResize": true
   },
   "deckCardStyle": "default",
   "mainInterfaceOpenLocation": "sidebar",
+  "deckStudyAutoViewByLocationEnabled": true,
   "queueOptimization": {
     "learningSteps": {
       "enabled": true,
@@ -100,6 +89,8 @@
   },
   "enableDirectDelete": false,
   "showClozeModeSwitchButton": true,
+  "startupDataCheckMode": "smart",
+  "enableStartupDataManagementGate": true,
   "hintMaxUses": 5,
   "license": {
     "activationCode": "",
@@ -189,7 +180,30 @@
     },
     "enableTemplateSystem": true,
     "templates": [],
-    "defaultTemplateId": "official-qa"
+    "defaultTemplateId": "official-qa",
+    "regexPresets": [
+      {
+        "id": "official-qa-format",
+        "name": "官方 Q&A 正则模板",
+        "description": "内置 Q/A 正则：用 Q: 与 A: 标记正反面，cardPattern 一次匹配全文中的多张卡片（设置页可测试解析）",
+        "mode": "pattern",
+        "patternMode": {
+          "cardPattern": "Q\\s*[:：]\\s*(.+?)\\s*A\\s*[:：]\\s*(.+?)(?=\\n\\s*Q\\s*[:：]|$)",
+          "flags": "gs",
+          "captureGroups": {
+            "front": 1,
+            "back": 2
+          }
+        },
+        "uuidLocation": "inline",
+        "uuidPattern": "<!-- (tk-[a-z0-9]{12}) -->",
+        "excludeTags": [
+          "禁止同步"
+        ],
+        "autoAddUUID": true,
+        "syncMethod": "tag-based"
+      }
+    ]
   },
   "migrationCompleted": false,
   "editor": {
@@ -461,6 +475,10 @@
     "reviewThreshold": 7,
     "maxInterval": 365,
     "importFolder": "weave/incremental-reading/IR",
+    "selectionQuickCreateDeleteSource": false,
+    "selectionQuickCreateLastFolder": "",
+    "selectionQuickCreateBacklinkPosition": "start",
+    "selectionQuickCreateSourceDocumentBacklinkPosition": "start",
     "appendSourceDocumentBacklinkOnSplitImport": false,
     "scheduleStrategy": "processing",
     "dailyTimeBudgetMinutes": 40,
@@ -470,11 +488,58 @@
     "autoPostponeStrategy": "gentle",
     "priorityHalfLifeDays": 7,
     "learnAheadDays": 3,
+    "tagGroupFollowMode": "ask",
     "folderSubscription": {
       "rules": [],
       "initialScheduleMode": "today",
       "importConfirmThreshold": 20
+    },
+    "calloutSignal": {
+      "enabled": true,
+      "typeWeights": [
+        {
+          "type": "question",
+          "enabled": true,
+          "weight": 2.5
+        },
+        {
+          "type": "warning",
+          "enabled": true,
+          "weight": 2
+        },
+        {
+          "type": "quote",
+          "enabled": true,
+          "weight": 1.5
+        },
+        {
+          "type": "tip",
+          "enabled": false,
+          "weight": 1.5
+        },
+        {
+          "type": "info",
+          "enabled": false,
+          "weight": 1
+        },
+        {
+          "type": "note",
+          "enabled": false,
+          "weight": 0.8
+        }
+      ],
+      "maxBoost": 2,
+      "saturationParam": 4,
+      "minContentLength": 0
     }
   },
-  "pinnedDecks": []
+  "pinnedDecks": [],
+  "epubBookshelf": {
+    "lastScanAt": 0
+  },
+  "startupDataGateBaseline": {
+    "fingerprint": "clean",
+    "passedAt": "2026-06-17T12:24:35.348Z",
+    "pluginVersion": "0.8.27"
+  }
 }

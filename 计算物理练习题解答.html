@@ -1,0 +1,701 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8">
+<title>计算物理练习题解答 — MATLAB逐行注释</title>
+<style>
+body{font-family:"宋体",serif;font-size:11pt;line-height:1.7;max-width:210mm;margin:15mm auto;padding:0 15px;color:#111}
+h1{font-size:18pt;text-align:center;margin-bottom:3px}
+h2{font-size:13pt;margin-top:35px;padding:5px 10px;border-bottom:2px solid #333;background:#f0f4f8;page-break-before:always}
+h2:first-of-type{page-break-before:avoid}
+.desc{margin:6px 0;padding:6px 12px;background:#f9f9f9;border-left:3px solid #4472C4;font-size:10.5pt}
+pre{font-family:"Consolas","Courier New",monospace;font-size:9pt;line-height:1.5;background:#1e1e1e;color:#d4d4d4;padding:8px 10px;border-radius:4px;overflow-x:auto;white-space:pre;tab-size:4}
+pre .cm{color:#6a9955}pre .kw{color:#569cd6}pre .st{color:#ce9178}pre .nm{color:#b5cea8}
+.result{background:#e8f5e9;border:1px solid #4caf50;padding:6px 12px;margin:8px 0;font-size:10pt}
+table{border-collapse:collapse;margin:8px auto;font-size:10pt}
+td{border:1px solid #888;padding:4px 10px}
+@page{margin:15mm 18mm}@media print{body{margin:0}h2{page-break-before:always}}
+</style></head><body>
+
+<h1>计算物理 20道练习题 MATLAB解答（逐行注释版）</h1>
+<p style="text-align:center;font-size:10pt;color:#666">每行代码均有中文注释 &nbsp;|&nbsp; 开卷考试可直接参考</p>
+
+<!-- ===== 第1题 ===== -->
+<h2>第1题 斜坡上的斜抛（空气阻力与v成正比）</h2>
+<div class="desc">物理：物体在含阻力的重力场中运动，落在斜坡上。数学：含阻力ODE+事件检测着陆。</div>
+
+<pre><span class="cm">% ====== 第1题：斜坡上的斜抛运动（空气阻力 f = -kv）======</span>
+
+clear;                          <span class="cm">% 清空工作区所有变量，防止旧数据干扰</span>
+close all;                      <span class="cm">% 关闭所有图形窗口</span>
+g = 9.8;                        <span class="cm">% 重力加速度 (m/s²)</span>
+m = 1;                          <span class="cm">% 物体质量 (kg)</span>
+k = 0.1;                        <span class="cm">% 空气阻力系数 (kg/s)，阻力 = -k*v</span>
+v0 = 20;                        <span class="cm">% 初速度大小 (m/s)</span>
+
+alpha = 30 * pi/180;            <span class="cm">% 山坡仰角，30度转弧度（pi/180是把度转弧度的系数）</span>
+
+<span class="cm">% 生成待测试的射角范围：从比坡度大5°开始，到80°，每隔1°取一个</span>
+theta_list = (alpha + 5*pi/180) : (1*pi/180) : (80*pi/180);
+
+R = zeros(size(theta_list));    <span class="cm">% 预分配一个和theta_list同样大小的数组，用来存每个射角对应的射程</span>
+
+<span class="kw">for</span> j = 1:length(theta_list)       <span class="cm">% 对每一个射角做计算</span>
+    theta = theta_list(j);          <span class="cm">% 当前射角（弧度）</span>
+    
+    <span class="cm">% 定义ODE方程组。MATLAB解ODE需化为一阶组：y(1)=x, y(2)=vx, y(3)=y, y(4)=vy</span>
+    odefun = @(t,y) [...
+        y(2);                       <span class="cm">% dx/dt = vx（水平速度就是位置的变化率）</span>
+        -k/m * y(2);                <span class="cm">% dvx/dt = -(k/m)*vx（阻力使水平速度减小）</span>
+        y(4);                       <span class="cm">% dy/dt = vy</span>
+        -g - k/m * y(4)             <span class="cm">% dvy/dt = -g - (k/m)*vy（重力+阻力使竖直速度减小）</span>
+    ];
+    
+    <span class="cm">% odeset设置"事件"：当y(3)-y(1)*tan(alpha)=0时停止，即物体落到斜坡上</span>
+    opts = odeset(<span class="st">'Events'</span>, @(t,y) deal(...
+        y(3)-y(1)*tan(alpha),       <span class="cm">% 条件：y坐标 - x坐标*tan(坡度) = 0</span>
+        1,                           <span class="cm">% isterminal=1: 满足条件就停止积分</span>
+        -1));                        <span class="cm">% direction=-1: 只在上往下穿越时触发</span>
+    
+    <span class="cm">% ode45求解：时间0~30s（足够长了），初值[x0,vx0,y0,vy0]</span>
+    [~, Y] = ode45(odefun, [0, 30], [0, v0*cos(theta), 0, v0*sin(theta)], opts);
+    
+    <span class="cm">% Y的最后一行就是落地时的状态，Y(end,1)是落地时x坐标</span>
+    <span class="cm">% 沿斜坡的射程 = x / cos(坡度)  （因为x=R*cosα）</span>
+    R(j) = Y(end,1) / cos(alpha);
+<span class="kw">end</span>
+
+<span class="cm">% 找到最大射程对应的位置</span>
+[R_max, idx_max] = max(R);                              <span class="cm">% max返回最大值和它的位置索引</span>
+fprintf(<span class="st">'α=30°时，最佳射角 = %.1f°，最大射程 = %.2f m\n'</span>, ...
+    theta_list(idx_max)*180/pi, R_max);                 <span class="cm">% 把弧度转回度来显示</span>
+
+<span class="cm">% 画射程 vs 射角的曲线</span>
+figure(<span class="st">'Name'</span>,<span class="st">'第1题'</span>);                              <span class="cm">% 创建新图形窗口并命名</span>
+plot(theta_list*180/pi, R, <span class="st">'b-'</span>, <span class="st">'LineWidth'</span>, 2);   <span class="cm">% 画蓝色实线，线宽2</span>
+xlabel(<span class="st">'射角 θ (°)'</span>);                              <span class="cm">% x轴标签</span>
+ylabel(<span class="st">'射程 R (m)'</span>);                               <span class="cm">% y轴标签</span>
+title(<span class="st">'斜坡α=30°时射程与射角关系'</span>);                  <span class="cm">% 标题</span>
+grid on;                                                <span class="cm">% 打开网格线</span></pre>
+
+<div class="result">
+<b>关键模板</b>：含阻力抛体 → 用 ode45 + Events 检测着陆<br>
+<b>初值写法</b>：[x0, vx0, y0, vy0] = [0, v0·cosθ, 0, v0·sinθ]<br>
+<b>事件函数</b>：返回 [条件, 是否停止(1=是), 穿越方向(0=双向,-1=向下)]
+</div>
+
+<!-- ===== 第2题 ===== -->
+<h2>第2题 斜抛的射程与射高（椭圆性质验证）</h2>
+<div class="desc">物理：无阻力时斜抛最高点分布在椭圆上。含阻力时数值求解ODE。</div>
+
+<pre><span class="cm">% ====== 第2题：水平射程、竖直射高、椭圆验证 ======</span>
+clear; close all;
+g = 9.8; v0 = 20; m = 1; k = 0.05;           <span class="cm">% 参数定义</span>
+
+theta = (10:5:80) * pi/180;                   <span class="cm">% 10°到80°，每5°一个射角</span>
+x_range = zeros(size(theta));                 <span class="cm">% 预分配：存水平射程</span>
+y_max   = zeros(size(theta));                 <span class="cm">% 预分配：存竖直射高</span>
+
+figure(<span class="st">'Name'</span>,<span class="st">'第2题'</span>);
+<span class="kw">for</span> i = 1:length(theta)
+    th = theta(i);
+    <span class="cm">% ODE：和第一题完全一样</span>
+    odefun = @(t,y) [y(2); -k/m*y(2); y(4); -g - k/m*y(4)];
+    
+    <span class="cm">% 这次事件检测 y=0（落地）</span>
+    opts = odeset(<span class="st">'Events'</span>, @(t,y) deal(y(3), 1, -1));
+    
+    <span class="cm">% 求解</span>
+    [~, Y] = ode45(odefun, [0, 30], [0, v0*cos(th), 0, v0*sin(th)], opts);
+    
+    x_range(i) = Y(end,1);                      <span class="cm">% 最后一行第1列=落地x坐标=射程</span>
+    y_max(i) = max(Y(:,3));                     <span class="cm">% 第3列(y坐标)的最大值=射高</span>
+    
+    plot(Y(:,1), Y(:,3)); hold on;              <span class="cm">% 画整条轨迹，hold on使多条线叠加</span>
+<span class="kw">end</span>
+xlabel(<span class="st">'x (m)'</span>); ylabel(<span class="st">'y (m)'</span>); title(<span class="st">'含阻力斜抛轨迹'</span>); grid on;
+
+<span class="cm">% ==== 以下单独验证无阻力时的椭圆性质 ====</span>
+figure(<span class="st">'Name'</span>,<span class="st">'椭圆验证'</span>);
+theta2 = (1:89) * pi/180;                       <span class="cm">% 1°~89°，几乎覆盖所有射角</span>
+x_h = v0^2 * sin(2*theta2) / (2*g);             <span class="cm">% 无阻力：x_H = v0²·sin2θ/(2g)</span>
+y_h = v0^2 * sin(theta2).^2 / (2*g);            <span class="cm">% 无阻力：y_H = v0²·sin²θ/(2g)</span>
+plot(x_h, y_h, <span class="st">'b.'</span>); hold on;                   <span class="cm">% 画所有最高点（蓝点）</span>
+
+a = v0^2/(4*g);                                 <span class="cm">% 椭圆的半长轴</span>
+th_ell = linspace(0, 2*pi, 200);                <span class="cm">% 0到2π，200个点画椭圆</span>
+plot(a*cos(th_ell), a + a*sin(th_ell), <span class="st">'r--'</span>);   <span class="cm">% 画椭圆虚线</span>
+xlabel(<span class="st">'x'</span>); ylabel(<span class="st">'y'</span>); axis equal; grid on;        <span class="cm">% axis equal使x和y轴比例一致</span>
+title(<span class="st">'最高点分布在椭圆上(无阻力)'</span>);</pre>
+
+<div class="result"><b>关键模板</b>：无阻力抛体 → 解析公式直接算；有阻力 → ode45<br><b>最高点椭圆</b>：(x_H/a)²+((y_H-a)/a)²=1, a=v₀²/(4g)</div>
+
+<!-- ===== 第3题 ===== -->
+<h2>第3题 飞机在风中往返时间</h2>
+<div class="desc">物理：速度合成——空速+风速=地速。往返时间受风向影响。</div>
+
+<pre><span class="cm">% ====== 第3题：飞机风中往返 ======</span>
+clear; close all;
+l = 1000;                                       <span class="cm">% AB距离 (km)</span>
+v = 500;                                        <span class="cm">% 飞机相对空气的速度 (km/h)</span>
+u = 100;                                        <span class="cm">% 风速 (km/h)</span>
+
+theta = linspace(0, 2*pi, 720);                 <span class="cm">% 风向角度，0到360度，720个点</span>
+
+sin_phi = u * sin(theta) / v;                   <span class="cm">% 航向修正角φ满足 sinφ = u·sinθ/v</span>
+cos_phi = sqrt(1 - sin_phi.^2);                 <span class="cm">% 由sin求cos</span>
+
+<span class="cm">% 去程地速：顺风分量 v*cosφ + u*cosθ</span>
+t_go = l ./ (v * cos_phi + u * cos(theta));     <span class="cm">% ./ 是逐元素除法。去程时间=距离/去程地速</span>
+<span class="cm">% 回程地速：逆风分量 v*cosφ - u*cosθ</span>
+t_back = l ./ (v * cos_phi - u * cos(theta));   <span class="cm">% 回程时间</span>
+t_total = t_go + t_back;                        <span class="cm">% 往返总时间</span>
+
+figure(<span class="st">'Name'</span>,<span class="st">'第3题'</span>);
+polarplot(theta, t_total);                      <span class="cm">% 极坐标图：角度=风向，半径=时间</span>
+title(sprintf(<span class="st">'往返时间 vs 风向'</span>));
+
+[t_min, i_min] = min(t_total);                  <span class="cm">% 找最小时间和对应位置</span>
+[t_max, i_max] = max(t_total);                  <span class="cm">% 找最大时间和对应位置</span>
+fprintf(<span class="st">'最短 %.2fh (风向 %.0f°), 最长 %.2fh (风向 %.0f°)\n'</span>, ...
+    t_min, theta(i_min)*180/pi, t_max, theta(i_max)*180/pi);</pre>
+
+<div class="result"><b>关键模板</b>：速度合成问题 → 直接解析计算，不用ODE<br><b>技巧</b>：min/max找极值，polarplot画极坐标</div>
+
+<!-- ===== 第4题 ===== -->
+<h2>第4题 链条从桌面滑落</h2>
+<div class="desc">物理：变质量系统的牛顿第二定律。下垂部分的重量驱动整条链加速。</div>
+
+<pre><span class="cm">% ====== 第4题：链条从光滑桌面滑落 ======</span>
+clear; close all;
+l = 1.0;  b = 0.2;  g = 9.8;                   <span class="cm">% 链长、初始下垂长度、重力加速度</span>
+
+<span class="cm">% 设下垂长度x(t)，整条链质量m</span>
+<span class="cm">% 下垂部分质量 = (x/l)·m，受重力 = (x/l)·m·g</span>
+<span class="cm">% 牛顿第二定律：m·x'' = (x/l)·m·g → x'' = (g/l)·x</span>
+<span class="cm">% 这个方程的解是双曲余弦函数：x(t) = b·cosh(√(g/l)·t)</span>
+
+omega = sqrt(g/l);                              <span class="cm">% 特征频率 ω = √(g/l)</span>
+
+<span class="cm">% 解析解——滑出桌面（x=l）的时刻</span>
+t_slide = acosh(l/b) / omega;                   <span class="cm">% acosh是反双曲余弦，cosh的反函数</span>
+v_slide = b*omega * sinh(omega*t_slide);        <span class="cm">% sinh是双曲正弦</span>
+
+fprintf(<span class="st">'滑出时间=%.4fs, 速度=%.4fm/s\n'</span>, t_slide, v_slide);
+
+<span class="cm">% 用ode45数值验证：</span>
+odefun = @(t,y) [y(2); g/l*y(1)];               <span class="cm">% y(1)=x,y(2)=v。x''=(g/l)*x</span>
+opts = odeset(<span class="st">'Events'</span>, @(t,y) deal(y(1)-l,1,1)); <span class="cm">% x=l时停止</span>
+[t_num, Y] = ode45(odefun, [0, t_slide*1.2], [b, 0], opts);
+
+t_plot = linspace(0, t_slide, 200);             <span class="cm">% 0到滑出时刻，200个等间隔点</span>
+x_ana = b * cosh(omega*t_plot);                 <span class="cm">% 解析解位置</span>
+v_ana = b*omega * sinh(omega*t_plot);           <span class="cm">% 解析解速度</span>
+
+figure(<span class="st">'Name'</span>,<span class="st">'第4题'</span>);
+plot(t_plot, x_ana, t_num, Y(:,1), <span class="st">'ro'</span>);         <span class="cm">% 解析解(线)+数值解(红圈)对比</span>
+xlabel(<span class="st">'t(s)'</span>); ylabel(<span class="st">'x(m)'</span>); legend(<span class="st">'解析'</span>,<span class="st">'数值'</span>); grid on;</pre>
+
+<div class="result"><b>关键模板</b>：变质量力学 → 先写牛顿方程再化为一阶ODE<br><b>常见形式</b>：x'' = (常数)·x → 解为双曲函数 cosh/sinh</div>
+
+<!-- ===== 第5题 ===== -->
+<h2>第5题 物体从半球面滑下（脱离角度）</h2>
+<div class="desc">物理：动量守恒+能量守恒→导出脱离条件→fzero求脱离角度。</div>
+
+<pre><span class="cm">% ====== 第5题：半球面滑落的脱离角度 ======</span>
+clear; close all;
+R = 1;  g = 9.8;
+
+<span class="cm">% 列出要测试的几种质量比 m/M</span>
+mr_list = [0.1, 0.5, 1, 2, 5, 10];             <span class="cm">% m是物体B质量，M是半球A质量</span>
+theta_detach = zeros(size(mr_list));            <span class="cm">% 预分配存脱离角</span>
+
+<span class="kw">for</span> idx = 1:length(mr_list)
+    mr = mr_list(idx);                          <span class="cm">% 当前质量比</span>
+    
+    <span class="cm">% 由水平动量守恒和能量守恒导出脱离时的条件方程：</span>
+    <span class="cm">% 2*(1-cosθ)*(1+mr) - cosθ*(1+mr*sin²θ) = 0</span>
+    <span class="cm">% 把这个方程定义为匿名函数，准备让fzero来求根</span>
+    func = @(th) 2*(1-cos(th))*(1+mr) - cos(th)*(1+mr*sin(th)^2);
+    
+    <span class="cm">% fzero在区间[0.1, π/2-0.1]内搜索使func=0的θ</span>
+    <span class="cm">% 区间两个端点函数值符号必须相反才能保证有根</span>
+    theta_detach(idx) = fzero(func, [0.1, pi/2-0.1]);
+<span class="kw">end</span>
+
+figure(<span class="st">'Name'</span>,<span class="st">'第5题'</span>);
+semilogx(mr_list, theta_detach*180/pi, <span class="st">'b-o'</span>);  <span class="cm">% semilogx:x轴对数坐标,y轴线性</span>
+xlabel(<span class="st">'m/M'</span>); ylabel(<span class="st">'脱离角(°)'</span>); grid on;
+
+fprintf(<span class="st">'m/M→0(固定半球): 脱离角=%.2f°\n'</span>, acos(2/3)*180/pi);</pre>
+
+<div class="result"><b>关键模板</b>：约束运动脱离 → fzero求脱离条件方程的根<br><b>fzero用法</b>：fzero(@方程, [下限, 上限]) — 端点函数值必须异号</div>
+
+<!-- ===== 第6题 ===== -->
+<h2>第6题 受迫振动（共振曲线）</h2>
+<div class="desc">物理：简谐振子在周期性外力下的稳态响应。核心：共振频率、振幅-频率曲线。</div>
+
+<pre><span class="cm">% ====== 第6题：阻尼受迫振动——共振 ======</span>
+clear; close all;
+m = 1;  k = 10;                                  <span class="cm">% 质量，劲度系数</span>
+omega0 = sqrt(k/m);                              <span class="cm">% 固有角频率 ω₀=√(k/m)</span>
+F0 = 1;                                          <span class="cm">% 驱动力幅值</span>
+
+gamma_vals = [0.5, 1, 2, 4];                    <span class="cm">% 四种阻尼系数，阻尼越大共振越不明显</span>
+Omega = linspace(0.1, 3*omega0, 500);            <span class="cm">% 驱动频率从0.1ω₀扫到3ω₀</span>
+
+figure(<span class="st">'Name'</span>,<span class="st">'第6题'</span>);
+<span class="kw">for</span> i = 1:length(gamma_vals)
+    g = gamma_vals(i);
+    beta = g/(2*m);                              <span class="cm">% 衰减系数 β=γ/(2m)</span>
+    
+    <span class="cm">% 稳态位移振幅公式：A = F₀/√[(k-mΩ²)² + (γΩ)²]</span>
+    A = F0 ./ sqrt((k - m*Omega.^2).^2 + (g*Omega).^2);
+    
+    <span class="cm">% 速度振幅 = Ω*A。速度共振始终在Ω=ω₀处</span>
+    V_amp = Omega .* A;
+    
+    subplot(2,2,i);                              <span class="cm">% 2行2列的第i个图</span>
+    yyaxis left;                                 <span class="cm">% 使用左侧y轴（蓝色）</span>
+    plot(Omega/omega0, A, <span class="st">'b-'</span>);                  <span class="cm">% 位移振幅曲线</span>
+    ylabel(<span class="st">'位移振幅 A'</span>);
+    yyaxis right;                                <span class="cm">% 使用右侧y轴（红色）——同一张图两个不同y轴</span>
+    plot(Omega/omega0, V_amp, <span class="st">'r--'</span>);             <span class="cm">% 速度振幅曲线</span>
+    ylabel(<span class="st">'速度振幅'</span>);
+    xlabel(<span class="st">'\Omega/\omega_0'</span>);                   <span class="cm">% x轴是驱动频率/固有频率的比值</span>
+    title(sprintf(<span class="st">'\\gamma=%.1f'</span>, g));
+    grid on;
+<span class="kw">end</span></pre>
+
+<div class="result"><b>yyaxis left/right</b>：同一子图用左右两个不同的y轴，分别画位移振幅（左轴）和速度振幅（右轴）<br><b>共振规律</b>：速度共振恒在Ω=ω₀，位移共振Ωr&lt;ω₀且随阻尼增大左移</div>
+
+<!-- ===== 第7题 ===== -->
+<h2>第7题 阻尼振动（三种阻尼对比）</h2>
+<div class="desc">物理：无外力的衰减振动。特征方程判别阻尼类型：欠阻尼(振荡衰减)、临界阻尼(最快回平衡)、过阻尼(慢衰减)。</div>
+
+<pre><span class="cm">% ====== 第7题：三种阻尼振动对比 ======</span>
+clear; close all;
+m = 1;  k = 10;  omega0 = sqrt(k/m);             <span class="cm">% 固有频率</span>
+A0 = 1;                                          <span class="cm">% 初始位移 1m，从静止释放(初速=0)</span>
+t = linspace(0, 20, 2000);                       <span class="cm">% 时间 0~20s，2000个点保证曲线光滑</span>
+
+<span class="cm">% 四种情况：β(衰减系数)分别为0.2ω₀、0.5ω₀、1.0ω₀、1.5ω₀</span>
+beta_vals = [0.2, 0.5, 1.0, 1.5] * omega0;
+labels = {<span class="st">'欠阻尼(轻)'</span>,<span class="st">'欠阻尼(重)'</span>,<span class="st">'临界阻尼'</span>,<span class="st">'过阻尼'</span>};
+
+figure(<span class="st">'Name'</span>,<span class="st">'第7题'</span>);
+<span class="kw">for</span> i = 1:4
+    beta = beta_vals(i);
+    
+    <span class="kw">if</span> beta &lt; omega0                            <span class="cm">% ||| 欠阻尼：β&lt;ω₀ |||</span>
+        omega_d = sqrt(omega0^2 - beta^2);      <span class="cm">% 阻尼振荡频率（比ω₀小）</span>
+        x = A0 * exp(-beta*t) .* (cos(omega_d*t) + beta/omega_d * sin(omega_d*t));
+        <span class="cm">% 振幅按e^{-βt}指数衰减，振荡频率ω_d</span>
+        
+    <span class="kw">elseif</span> abs(beta - omega0) &lt; 1e-6            <span class="cm">% ||| 临界阻尼：β=ω₀ |||</span>
+        x = A0 * (1 + omega0*t) .* exp(-omega0*t);
+        <span class="cm">% 刚好不振荡，以最快速度回到平衡位置</span>
+        
+    <span class="kw">else</span>                                        <span class="cm">% ||| 过阻尼：β&gt;ω₀ |||</span>
+        lam1 = -beta + sqrt(beta^2 - omega0^2); <span class="cm">% 特征根1（绝对值较小）</span>
+        lam2 = -beta - sqrt(beta^2 - omega0^2); <span class="cm">% 特征根2（绝对值较大）</span>
+        C1 = A0 * lam2/(lam2 - lam1);           <span class="cm">% 由初位移A0初速0确定系数C1</span>
+        C2 = A0 * lam1/(lam1 - lam2);           <span class="cm">% 系数C2</span>
+        x = C1*exp(lam1*t) + C2*exp(lam2*t);    <span class="cm">% 两个指数衰减的叠加</span>
+    <span class="kw">end</span>
+    
+    subplot(2,2,i);
+    plot(t, x);  xlabel(<span class="st">'t(s)'</span>); ylabel(<span class="st">'x(m)'</span>);
+    title(labels{i}); grid on;
+<span class="kw">end</span></pre>
+
+<div class="result"><b>判别条件</b>：β&lt;ω₀→欠阻尼振荡；β=ω₀→临界阻尼；β&gt;ω₀→过阻尼<br><b>记忆</b>：β=γ/(2m)衰减系数，ω₀=√(k/m)固有频率</div>
+
+<!-- ===== 第8题 ===== --><h2>第8题 双缝干涉</h2><div class="desc">光学：两束相干光叠加，强度 I=2I₀(1+cosΔφ)。条纹间距 Δy=λL/d。</div>
+<pre><span class="cm">% ====== 第8题：双缝干涉 ======</span>
+clear; close all;
+lambda = 500e-9;                                <span class="cm">% 波长 500nm=5e-7m</span>
+k = 2*pi / lambda;                              <span class="cm">% 波数 k=2π/λ</span>
+I0 = 1;                                         <span class="cm">% 单缝光强（归一化为1）</span>
+d = 0.001;                                      <span class="cm">% 双缝间距 1mm=0.001m</span>
+L = 1;                                          <span class="cm">% 缝到屏的距离 1m</span>
+y = linspace(-0.005, 0.005, 2000);              <span class="cm">% 屏上坐标 ±5mm，2000个点</span>
+
+delta_r = d * y / L;                            <span class="cm">% 光程差（远场近似）：Δr≈d·sinθ≈d·y/L</span>
+delta_phi = k * delta_r;                        <span class="cm">% 相位差 Δφ = (2π/λ)·Δr</span>
+
+<span class="cm">% 干涉光强公式：I = I₁+I₂+2√(I₁I₂)cosΔφ = 2I₀(1+cosΔφ)</span>
+I = 2 * I0 * (1 + cos(delta_phi));
+
+figure(<span class="st">'Name'</span>,<span class="st">'第8题'</span>);
+subplot(2,1,1);                                 <span class="cm">% 2行1列，画在第1个位置</span>
+plot(y*1000, I);                                <span class="cm">% x用mm单位(×1000)</span>
+xlabel(<span class="st">'y(mm)'</span>); ylabel(<span class="st">'光强'</span>); title(<span class="st">'双缝干涉光强分布'</span>); grid on;
+
+subplot(2,1,2);                                 <span class="cm">% 画在第2个位置</span>
+imagesc(y*1000, [0,1], repmat(I/max(I),[20,1]));<span class="cm">% repmat:把一行光强重复20行→二维条纹图</span>
+colormap(gray);                                 <span class="cm">% 用灰度colormap，白=亮，黑=暗</span>
+xlabel(<span class="st">'y(mm)'</span>); title(<span class="st">'干涉条纹图样'</span>);
+
+fprintf(<span class="st">'条纹间距 Δy = λL/d = %.3f mm\n'</span>, lambda*L/d*1000);</pre>
+
+<div class="result"><b>关键模板</b>：干涉/衍射 → 光强公式直接算，不需要ODE<br><b>imagesc+repmat</b>：把一维数据复制成二维来显示条纹图样<br><b>colormap(gray)</b>：设定颜色映射为灰度</div>
+
+<!-- ===== 第9题 ===== --><h2>第9题 单缝衍射</h2><div class="desc">光学：I=I₀[sinβ/β]², β=πa·sinθ/λ。半波带法判断明暗纹。</div>
+<pre><span class="cm">% ====== 第9题：夫琅禾费单缝衍射 ======</span>
+clear; close all;
+lambda = 500e-9;  L = 1;                        <span class="cm">% 波长、距离</span>
+y = linspace(-0.1, 0.1, 2000);                  <span class="cm">% 屏上坐标 ±0.1m</span>
+theta = atan(y/L);                              <span class="cm">% atan是反正切，由y和L算出衍射角θ</span>
+
+a_vals = [2, 5, 10] * 1e-6;                     <span class="cm">% 三种缝宽：2μm, 5μm, 10μm</span>
+
+figure(<span class="st">'Name'</span>,<span class="st">'第9题'</span>);
+<span class="kw">for</span> i = 1:3
+    a = a_vals(i);
+    beta = pi * a * sin(theta) / lambda;        <span class="cm">% 单缝衍射的特征参数 β</span>
+    I = (sin(beta+1e-12)./(beta+1e-12)).^2;     <span class="cm">% sinc²(β)，+1e-12防止除以0</span>
+    
+    subplot(2,2,i);
+    plot(y*1000, I);                            <span class="cm">% 横轴单位mm</span>
+    xlabel(<span class="st">'y(mm)'</span>); ylabel(<span class="st">'I/I_0'</span>);
+    title(sprintf(<span class="st">'a=%d\\mum'</span>, round(a*1e6)));
+    grid on;
+<span class="kw">end</span>
+
+<span class="cm">% 第4个子图：同一缝宽下三种波长对比</span>
+subplot(2,2,4);
+a = 5e-6;
+<span class="kw">for</span> lam = [750, 540, 440]*1e-9               <span class="cm">% 依次红、绿、蓝光</span>
+    beta = pi * a * sin(theta) / lam;
+    I = (sin(beta+1e-12)./(beta+1e-12)).^2;
+    plot(y*1000, I); hold on;                   <span class="cm">% 三条曲线叠加</span>
+<span class="kw">end</span>
+xlabel(<span class="st">'y(mm)'</span>); legend(<span class="st">'红750nm'</span>,<span class="st">'绿540nm'</span>,<span class="st">'蓝440nm'</span>); grid on;</pre>
+
+<div class="result"><b>关键</b>：sinc²(β)的写法——(sin(β)/β)²，β=πa·sinθ/λ<br><b>+1e-12</b>：极小值防止β=0时0/0报错<br><b>规律</b>：缝越窄→衍射越宽；波长越长→衍射越宽</div>
+
+<!-- ===== 第10题 ===== --><h2>第10题 光栅衍射</h2><div class="desc">光学：I=I₀[sinβ/β]²·[sin(Nα)/sinα]²。核心：主极大、次极大、缺级。</div>
+<pre><span class="cm">% ====== 第10题：光栅衍射 ======</span>
+clear; close all;
+lambda = 500e-9;  L = 1;
+a = 2e-6;  b = 6e-6;  d = a + b;               <span class="cm">% 缝宽a,挡板b,光栅常数d。d/a=4</span>
+y = linspace(-0.08, 0.08, 4000);                <span class="cm">% ±80mm范围，4000个点（光栅条纹很窄）</span>
+theta = atan(y/L);
+
+N_vals = [2, 5, 10, 50];                        <span class="cm">% 四种缝数</span>
+
+figure(<span class="st">'Name'</span>,<span class="st">'第10题'</span>);
+<span class="kw">for</span> i = 1:4
+    N = N_vals(i);
+    beta = pi * a * sin(theta) / lambda;        <span class="cm">% 单缝衍射因子 β</span>
+    alpha_g = pi * d * sin(theta) / lambda;     <span class="cm">% 多缝干涉因子 α</span>
+    
+    <span class="cm">% 光栅总光强 = 单缝衍射包络 × 多缝干涉条纹</span>
+    I_single = (sin(beta+1e-12)./(beta+1e-12)).^2;          <span class="cm">% 衍射部分</span>
+    I_multi  = (sin(N*alpha_g+1e-12)./(sin(alpha_g+1e-12))).^2; <span class="cm">% 干涉部分</span>
+    I = I_single .* I_multi / N^2;              <span class="cm">% .*是逐元素乘,/N²归一化使峰值≈1</span>
+    
+    subplot(2,2,i);
+    plot(y*1000, I); xlabel(<span class="st">'y(mm)'</span>); ylabel(<span class="st">'I'</span>);
+    title(sprintf(<span class="st">'N=%d缝'</span>, N)); grid on;
+<span class="kw">end</span>
+fprintf(<span class="st">'d/a=%.0f → 第%.0f,%.0f,%.0f…级缺级\n'</span>, d/a, d/a, 2*d/a, 3*d/a);</pre>
+
+<div class="result"><b>缺级</b>：当d/a=整数时，每(d/a)级主极大被单缝衍射零点压灭<br><b>N越大</b>：主极大越尖锐（分辨率越高），次极大数量=N-2</div>
+
+<!-- ===== 第11题 ===== --><h2>第11题 平行电流磁场</h2><div class="desc">电磁：B=μ₀I/(2πr)，叠加原理。两同向电流的合磁场分布。</div>
+<pre><span class="cm">% ====== 第11题：两平行电流的磁感应强度 ======</span>
+clear; close all;
+mu0 = 4*pi*1e-7;                                <span class="cm">% 真空磁导率（恒定值）</span>
+I = 1;  a = 0.1;                                <span class="cm">% 电流1A，两导线间距2a=0.2m</span>
+
+x = linspace(-3*a, 3*a, 500);                   <span class="cm">% x从-3a到+3a</span>
+x(abs(x+a)&lt;0.005*a) = NaN;                       <span class="cm">% 把x=-a附近的值设为NaN（Not a Number）</span>
+x(abs(x-a)&lt;0.005*a) = NaN;                       <span class="cm">% 把x=+a附近也设为NaN，避免在导线位置画到无穷大</span>
+
+<span class="cm">% 连线上B的y分量（垂直纸面）</span>
+By_line = mu0*I/(2*pi)*(1./(x-a) - 1./(x+a));  <span class="cm">% 两导线的叠加，中间区域反向相减</span>
+
+<span class="cm">% 中垂线上B的x分量</span>
+y = linspace(-3*a, 3*a, 500);                   <span class="cm">% y坐标</span>
+R = sqrt(a^2 + y.^2);                            <span class="cm">% 任一点(y)到导线的距离</span>
+Bx_perp = mu0*I*a./(pi*R.^2);                    <span class="cm">% 中垂线上只有x分量，两导线贡献相同加和</span>
+
+figure(<span class="st">'Name'</span>,<span class="st">'第11题'</span>);
+subplot(2,1,1); plot(x/a, By_line*1e6);          <span class="cm">% ×1e6把T转成μT单位</span>
+xlabel(<span class="st">'x/a'</span>); ylabel(<span class="st">'B_y(\muT)'</span>); title(<span class="st">'连线上B'</span>); grid on;
+subplot(2,1,2); plot(y/a, Bx_perp*1e6);
+xlabel(<span class="st">'y/a'</span>); ylabel(<span class="st">'B_x(\muT)'</span>); title(<span class="st">'中垂线上B'</span>); grid on;</pre>
+
+<div class="result"><b>B=μ₀I/(2πr)</b>：长直导线磁场公式<br><b>NaN</b>：把不需要的点设为NaN，plot遇到NaN会自动跳过不画</div>
+
+<!-- ===== 第12题 ===== --><h2>第12题 半圆环安培力</h2><div class="desc">电磁：dF=I·dl×B，用integral数值积分求总力。</div>
+<pre><span class="cm">% ====== 第12题：通电半圆环所受安培力 ======</span>
+clear; close all;
+mu0 = 4*pi*1e-7;  I1 = 1;  I2 = 0.5;  a = 0.1;
+
+d_list = linspace(1.05*a, 5*a, 200);            <span class="cm">% 距离从略大于a到5a</span>
+F_total = zeros(size(d_list));                  <span class="cm">% 预分配存力</span>
+
+<span class="kw">for</span> idx = 1:length(d_list)
+    d = d_list(idx);
+    
+    <span class="cm">% 半圆环部分：对角度φ从0到π积分</span>
+    <span class="cm">% 被积函数是 dF/dφ = I₂·μ₀I₁/(2π)·a·sinφ/(d+a·cosφ)</span>
+    f_half = @(phi) I2*mu0*I1/(2*pi) * a*sin(phi) ./ (d + a*cos(phi));
+    F_half = integral(f_half, 0, pi);           <span class="cm">% integral做数值定积分</span>
+    
+    <span class="cm">% 直径部分：对x从d-a到d+a积分</span>
+    f_diam = @(x) I2*mu0*I1./(2*pi*x);
+    F_diam = integral(f_diam, d-a, d+a);
+    
+    F_total(idx) = F_half + F_diam;             <span class="cm">% 两部分力相加</span>
+<span class="kw">end</span>
+
+figure(<span class="st">'Name'</span>,<span class="st">'第12题'</span>);
+plot(d_list/a, F_total*1e6);                    <span class="cm">% ×1e6转μN</span>
+xlabel(<span class="st">'d/a'</span>); ylabel(<span class="st">'F(\muN)'</span>); grid on;
+title(<span class="st">'安培力与距离关系'</span>);</pre>
+
+<div class="result"><b>integral</b>：做数值定积分，用法 integral(@被积函数, 下限, 上限)<br><b>安培力</b>：dF=I·dl×B，矢量叉积的方向用右手定则判断</div>
+
+<!-- ===== 第13题 ===== --><h2>第13题 旋转线圈电动势</h2><div class="desc">电磁：ε=-dΦ/dt。先算磁通量Φ(t)，再数值求导得电动势。</div>
+<pre><span class="cm">% ====== 第13题：旋转线圈感应电动势 ======</span>
+clear; close all;
+mu0 = 4*pi*1e-7;  I = 1;
+a = 0.05;  b = 0.1;                              <span class="cm">% 线圈半宽a=5cm，长b=10cm</span>
+omega = 2*pi*10;                                 <span class="cm">% 角频率 10Hz → ω=20π rad/s</span>
+
+d_list = [0.1, 0.2, 0.5];                        <span class="cm">% 三种距离</span>
+t = linspace(0, 0.2, 2000);                      <span class="cm">% 时间0~0.2s</span>
+
+figure(<span class="st">'Name'</span>,<span class="st">'第13题'</span>);
+<span class="kw">for</span> di = 1:3
+    d = d_list(di);
+    epsilon = zeros(size(t));                    <span class="cm">% 预分配存电动势</span>
+    Phi_prev = 0;                                <span class="cm">% 上一时刻的磁通量</span>
+    
+    <span class="kw">for</span> j = 1:length(t)
+        ct = cos(omega * t(j));                  <span class="cm">% cos(ωt)，线圈旋转角度</span>
+        <span class="cm">% 磁通量Φ = ∫₋ₐᵃ μ₀I·b/(2π(d+x·cosωt)) dx</span>
+        f_flux = @(x) 1 ./ max(d + x*ct, d*0.001);<span class="cm">% max防止分母变0</span>
+        Phi = mu0*I*b/(2*pi) * integral(f_flux, -a, a);
+        
+        <span class="kw">if</span> j &gt; 1
+            <span class="cm">% 数值求导：ε = -dΦ/dt ≈ -(Φ_new - Φ_old)/Δt</span>
+            epsilon(j) = -(Phi - Phi_prev)/(t(j)-t(j-1));
+        <span class="kw">end</span>
+        Phi_prev = Phi;
+    <span class="kw">end</span>
+    
+    subplot(3,1,di);                             <span class="cm">% 3行1列，第di个</span>
+    plot(t*1000, epsilon*1000);                   <span class="cm">% ms和mV单位</span>
+    xlabel(<span class="st">'t(ms)'</span>); ylabel(<span class="st">'ε(mV)'</span>);
+    title(sprintf(<span class="st">'d=%.2fm'</span>, d)); grid on;
+<span class="kw">end</span></pre>
+
+<div class="result"><b>法拉第定律</b>：ε=-dΦ/dt。先integral算Φ，再通过前后时刻差值求ε<br><b>max(a,b)</b>：取a和b中较大的值，防分母趋零</div>
+
+<!-- ===== 第14题 ===== --><h2>第14题 一维无限深势阱</h2><div class="desc">量子：ψₙ=√(2/L)sin(nπx/L), Eₙ=n²π²ħ²/(2mL²)。</div>
+<pre><span class="cm">% ====== 第14题：一维无限深势阱 ======</span>
+clear; close all;
+L = 1e-9;                                        <span class="cm">% 阱宽 1nm = 1e-9 m</span>
+h_bar = 1.054571817e-34;                         <span class="cm">% 约化普朗克常数 ħ (J·s)</span>
+m_e = 9.10938356e-31;                            <span class="cm">% 电子质量 (kg)</span>
+eV = 1.602176634e-19;                            <span class="cm">% 1电子伏特 = 1.602e-19 J（单位换算用）</span>
+n_max = 5;                                       <span class="cm">% 展示前5个能级</span>
+
+x = linspace(0, L, 500);                         <span class="cm">% 位置从0到L，500个点</span>
+
+figure(<span class="st">'Name'</span>,<span class="st">'第14题'</span>);
+<span class="kw">for</span> n = 1:n_max
+    <span class="cm">% 能级公式</span>
+    E_n = n^2 * pi^2 * h_bar^2 / (2*m_e*L^2);   <span class="cm">% n²成正比</span>
+    <span class="cm">% 波函数</span>
+    psi = sqrt(2/L) * sin(n*pi*x/L);             <span class="cm">% 驻波形式</span>
+    <span class="cm">% 概率密度</span>
+    prob = psi.^2;                               <span class="cm">% |ψ|²</span>
+    
+    subplot(n_max, 2, 2*n-1);                    <span class="cm">% 5行2列，奇数列画波函数</span>
+    plot(x*1e9, psi);                            <span class="cm">% 横轴用nm单位</span>
+    title(sprintf(<span class="st">'n=%d, ψ'</span>, n));
+    
+    subplot(n_max, 2, 2*n);                      <span class="cm">% 5行2列，偶数列画概率密度</span>
+    plot(x*1e9, prob);
+    title(sprintf(<span class="st">'n=%d, |ψ|²  E=%.2feV'</span>, n, E_n/eV));
+<span class="kw">end</span></pre>
+
+<div class="result"><b>结论</b>：基态n=1无节点，ψₙ有n-1个节点。概率密度在阱壁(x=0,L)处为0。</div>
+
+<!-- ===== 第15题 ===== --><h2>第15题 康普顿散射</h2><div class="desc">量子：λ'-λ=λ_C(1-cosθ), λ_C=h/(mₑc)。</div>
+<pre><span class="cm">% ====== 第15题：康普顿散射 ======</span>
+clear; close all;
+h = 6.62607015e-34;  c = 2.99792458e8;           <span class="cm">% 普朗克常数、光速</span>
+m_e = 9.10938356e-31;  e = 1.602176634e-19;       <span class="cm">% 电子质量、电子电荷</span>
+
+lambda_C = h/(m_e*c);                            <span class="cm">% 康普顿波长 λ_C = 2.426 pm</span>
+lambda_in = 0.071e-9;                            <span class="cm">% 入射X射线波长（Mo靶Kα线=71pm）</span>
+
+theta = linspace(0, pi, 500);                    <span class="cm">% 散射角0~π</span>
+
+lambda_out = lambda_in + lambda_C*(1 - cos(theta)); <span class="cm">% 散射后波长</span>
+E_in  = h*c / lambda_in;                         <span class="cm">% 入射光子能量 E=hc/λ</span>
+E_out = h*c ./ lambda_out;                        <span class="cm">% 散射光子能量（随角度变化）</span>
+K_e = E_in - E_out;                              <span class="cm">% 反冲电子动能 = 光子损失的能量</span>
+p_e = sqrt(2*m_e*K_e);                           <span class="cm">% 电子动量（非相对论近似 p=√(2mK)）</span>
+
+figure(<span class="st">'Name'</span>,<span class="st">'第15题'</span>);
+subplot(2,2,1); plot(theta*180/pi, (lambda_out-lambda_in)*1e12);
+xlabel(<span class="st">'θ(°)'</span>); ylabel(<span class="st">'Δλ(pm)'</span>); title(<span class="st">'波长移动'</span>); grid on;
+subplot(2,2,2); plot(theta*180/pi, K_e/eV);       <span class="cm">% /eV 把J转为eV</span>
+xlabel(<span class="st">'θ(°)'</span>); ylabel(<span class="st">'K(eV)'</span>); title(<span class="st">'电子动能'</span>); grid on;
+subplot(2,2,3); plot(theta*180/pi, lambda_out*1e12);
+xlabel(<span class="st">'θ(°)'</span>); ylabel(<span class="st">'λ(pm)'</span>); title(<span class="st">'散射波长'</span>); grid on;
+subplot(2,2,4); plot(theta*180/pi, p_e);
+xlabel(<span class="st">'θ(°)'</span>); ylabel(<span class="st">'p(kg·m/s)'</span>); title(<span class="st">'电子动量'</span>); grid on;
+
+fprintf(<span class="st">'λ_C=%.3fpm, θ=180°时Δλ_max=%.3fpm\n'</span>, lambda_C*1e12, 2*lambda_C*1e12);</pre>
+
+<div class="result"><b>公式</b>：Δλ=λ_C(1-cosθ)，与入射波长无关<br><b>θ=90°时Δλ=λ_C</b>；<b>θ=180°时Δλ=2λ_C</b></div>
+
+<!-- ===== 第16题 ===== --><h2>第16题 波的干涉图样</h2><div class="desc">物理：两列波的叠加。振幅=2A|cos(kΔr/2)|。</div>
+<pre><span class="cm">% ====== 第16题：波的干涉图样 ======</span>
+clear; close all;
+lambda = 1;  k = 2*pi/lambda;  A = 1;  d = 3;    <span class="cm">% 波长归一化=1，波源间距=3</span>
+
+x = linspace(-10, 10, 400);                      <span class="cm">% 平面范围：-10到10</span>
+[X, Y] = meshgrid(x, x);                         <span class="cm">% 生成400×400的网格，每一点的(x,y)坐标</span>
+
+R1 = sqrt((X-d/2).^2 + Y.^2);                    <span class="cm">% 网格上每点到波源1的距离</span>
+R2 = sqrt((X+d/2).^2 + Y.^2);                    <span class="cm">% 网格上每点到波源2的距离</span>
+delta_r = R2 - R1;                               <span class="cm">% 波程差（矩阵运算）</span>
+
+amplitude = 2*A * abs(cos(k*delta_r/2));         <span class="cm">% 合振幅，abs取绝对值</span>
+
+figure(<span class="st">'Name'</span>,<span class="st">'第16题'</span>);
+pcolor(X, Y, amplitude);                         <span class="cm">% 伪彩色图：用颜色表示振幅大小</span>
+shading interp;                                  <span class="cm">% 颜色平滑插值（去马赛克）</span>
+axis equal; colormap(jet); colorbar;              <span class="cm">% colorbar在右侧显示颜色标尺</span>
+xlabel(<span class="st">'x'</span>); ylabel(<span class="st">'y'</span>); title(<span class="st">'波的干涉图样'</span>);</pre>
+
+<div class="result"><b>meshgrid</b>：把一维坐标扩展成二维网格。必用于任何二维场图<br><b>pcolor+shading interp</b>：画伪彩色图并平滑化</div>
+
+<!-- ===== 第17题 ===== --><h2>第17题 互感系数</h2><div class="desc">电磁：M=μ₀(d-√(d²-a²))。</div>
+<pre><span class="cm">% ====== 第17题：直线与圆环互感 ======</span>
+clear; close all;
+mu0 = 4*pi*1e-7;  a = 0.1;                       <span class="cm">% 圆环半径</span>
+d = linspace(1.01*a, 10*a, 500);                 <span class="cm">% 距离范围 d>a(否则无物理意义)</span>
+
+M = mu0 * (d - sqrt(d.^2 - a^2));                <span class="cm">% 互感系数解析公式</span>
+
+figure(<span class="st">'Name'</span>,<span class="st">'第17题'</span>);
+plot(d/a, M*1e6);                                <span class="cm">% ×1e6转μH(微亨)</span>
+xlabel(<span class="st">'d/a'</span>); ylabel(<span class="st">'M(\muH)'</span>); grid on;
+title(<span class="st">'互感系数与距离关系'</span>);</pre>
+
+<!-- ===== 第18题 ===== --><h2>第18题 船的运动（非线性阻力）</h2><div class="desc">物理：m·dv/dt=-k·vⁿ。n不同，衰减方式完全不同。</div>
+<pre><span class="cm">% ====== 第18题：船的运动——非线性阻力 ======</span>
+clear; close all;
+m = 1000;  v0 = 10;  k = 50;                     <span class="cm">% 质量、初速、阻力系数</span>
+t = linspace(0, 100, 2000);                      <span class="cm">% 时间</span>
+n_vals = [0, 0.5, 1, 1.5, 2];                    <span class="cm">% 五种n值</span>
+
+figure(<span class="st">'Name'</span>,<span class="st">'第18题'</span>);
+<span class="kw">for</span> i = 1:5
+    n = n_vals(i);
+    
+    <span class="kw">if</span> n == 0                                    <span class="cm">% n=0:匀减速，有限时间v→0</span>
+        t_stop = m*v0/k;
+        v = max(v0 - k/m*t, 0);                 <span class="cm">% max(…,0)确保速度不为负</span>
+    <span class="kw">elseif</span> n == 1                                <span class="cm">% n=1:指数衰减 e^{-kt/m}</span>
+        v = v0 * exp(-k/m*t);
+    <span class="kw">else</span>                                        <span class="cm">% n≠0,1:幂律衰减 v(t)=[v0^{1-n}+(n-1)kt/m]^{1/(1-n)}</span>
+        v = (v0^(1-n) + (n-1)*k/m*t).^(1/(1-n));
+        <span class="kw">if</span> n &lt; 1                                    <span class="cm">% n&lt;1时有限时间停止</span>
+            tau = v0^(1-n)/((1-n)*k/m);          <span class="cm">% 停止时间</span>
+            v(t > tau) = 0;                      <span class="cm">% 停止后速度为0</span>
+        <span class="kw">end</span>
+    <span class="kw">end</span>
+    
+    plot(t, v); hold on;                         <span class="cm">% 叠加画5条曲线</span>
+<span class="kw">end</span>
+xlabel(<span class="st">'t(s)'</span>); ylabel(<span class="st">'v(m/s)'</span>);
+legend(<span class="st">'n=0'</span>,<span class="st">'n=0.5'</span>,<span class="st">'n=1'</span>,<span class="st">'n=1.5'</span>,<span class="st">'n=2'</span>); grid on;</pre>
+
+<div class="result"><b>n=0</b>匀减速→有限时停止；<b>n=1</b>指数→永不停但递减快；<b>n=2</b>→初段减速快尾段极慢</div>
+
+<!-- ===== 第19题 ===== --><h2>第19题 单摆冲击</h2><div class="desc">物理：能量守恒½mv₀²=½ml²θ'²+mgl(1-cosθ)。绳张力T=mgcosθ+mlθ'²。</div>
+<pre><span class="cm">% ====== 第19题：单摆冲击——角速度与张力 ======</span>
+clear; close all;
+l = 1;  g = 9.8;  m = 1;                         <span class="cm">% 摆长、重力加速度、质量</span>
+theta = linspace(0, pi, 500);                    <span class="cm">% 角度范围</span>
+v0_vals = [2, 4, 6, 8];                          <span class="cm">% 四种初速度</span>
+
+figure(<span class="st">'Name'</span>,<span class="st">'第19题'</span>);
+<span class="kw">for</span> i = 1:4
+    v0 = v0_vals(i);
+    <span class="cm">% 由能量守恒得：θ'² = v₀²/l² - 2g(1-cosθ)/l</span>
+    omega2 = v0^2/l^2 - 2*g*(1-cos(theta))/l;
+    valid = omega2 >= 0;                         <span class="cm">% 筛选可达角度（ω²≥0才物理）</span>
+    omega = sqrt(omega2(valid));                 <span class="cm">% 角速度（只取有效部分）</span>
+    theta_v = theta(valid);                      <span class="cm">% 对应的有效角度</span>
+    
+    T = m*g*cos(theta_v) + m*l*omega.^2;         <span class="cm">% 绳张力（向心力+重力分量）</span>
+    
+    subplot(2,2,i);
+    yyaxis left; plot(theta_v*180/pi, omega);    <span class="cm">% 左轴：角速度</span>
+    ylabel(<span class="st">'ω(rad/s)'</span>);
+    yyaxis right; plot(theta_v*180/pi, T);        <span class="cm">% 右轴：张力</span>
+    ylabel(<span class="st">'T(N)'</span>);
+    xlabel(<span class="st">'θ(°)'</span>); title(sprintf(<span class="st">'v0=%.0f'</span>, v0)); grid on;
+<span class="kw">end</span>
+fprintf(<span class="st">'完成圆周: v0≥√(5gl)=%.2f m/s\n'</span>, sqrt(5*g*l));</pre>
+
+<div class="result"><b>圆周运动条件</b>：v₀²≥5gl（最高点张力≥0）<br><b>能量守恒判角度</b>：ω²≥0就是摆能摆到的范围</div>
+
+<!-- ===== 第20题 ===== --><h2>第20题 微观粒子波动性</h2><div class="desc">量子：λ=h/p，非相对论λ=h/√(2meU)，相对论λ=hc/√[eU(2mc²+eU)]。</div>
+<pre><span class="cm">% ====== 第20题：德布罗意波 + 电子双缝干涉模拟 ======</span>
+clear; close all;
+h = 6.626e-34;  c = 2.998e8;  m_e = 9.109e-31;  e = 1.602e-19;
+
+<span class="cm">% ---- (a) 德布罗意波长 ----</span>
+U = logspace(1, 5, 500);                         <span class="cm">% 电压范围10V~100kV，对数均匀分布</span>
+lam_nr = h ./ sqrt(2*m_e*e*U);                   <span class="cm">% 非相对论波长</span>
+lam_r  = h*c ./ sqrt(e*U.*(2*m_e*c^2+e*U));      <span class="cm">% 含相对论修正波长</span>
+
+subplot(2,2,1);
+loglog(U/1000, lam_nr*1e12, <span class="st">'b-'</span>, U/1000, lam_r*1e12, <span class="st">'r--'</span>);
+<span class="cm">% loglog：x和y轴都用对数坐标</span>
+xlabel(<span class="st">'U(kV)'</span>); ylabel(<span class="st">'λ(pm)'</span>);
+legend(<span class="st">'非相对论'</span>,<span class="st">'相对论'</span>); grid on;
+
+<span class="cm">% ---- (b) 电子双缝干涉蒙特卡罗模拟 ----</span>
+N = 5000;                                        <span class="cm">% 模拟5000个电子</span>
+d = 1e-6;  a = 0.1e-6;  L_screen = 1;           <span class="cm">% 缝距、缝宽、屏距</span>
+lam_e = 0.005e-9;                                <span class="cm">% 电子波长5pm</span>
+
+y_bins = linspace(-5e-3, 5e-3, 100);             <span class="cm">% 屏上100个统计区间</span>
+I_counts = zeros(size(y_bins));                  <span class="cm">% 每个区间的电子计数</span>
+
+<span class="kw">for</span> k = 1:N
+    <span class="cm">% 双缝干涉的概率密度（cos²调制 × sinc²包络）</span>
+    prob = cos(pi*d*y_bins/(lam_e*L_screen)).^2 .* ...
+           (sin(pi*a*y_bins/(lam_e*L_screen))./(pi*a*y_bins/(lam_e*L_screen)+1e-12)).^2;
+    prob = prob / sum(prob);                     <span class="cm">% 归一化，使总概率=1</span>
+    
+    <span class="cm">% randsample：按给定的概率分布随机抽取一个区间编号</span>
+    idx = randsample(length(y_bins), 1, true, prob);
+    I_counts(idx) = I_counts(idx) + 1;           <span class="cm">% 该区间计数+1</span>
+<span class="kw">end</span>
+
+subplot(2,2,[3 4]);
+bar(y_bins*1000, I_counts);                      <span class="cm">% bar画柱状图（直方图）</span>
+xlabel(<span class="st">'屏上位置(mm)'</span>); ylabel(<span class="st">'电子计数'</span>);
+title(sprintf(<span class="st">'电子双缝干涉 N=%d'</span>, N)); grid on;
+
+fprintf(<span class="st">'U=100V:λ=%.1fpm  U=10kV:λ=%.1fpm  U=100kV:λ=%.1fpm\n'</span>, ...
+    h/sqrt(2*m_e*e*100)*1e12, h/sqrt(2*m_e*e*10000)*1e12, ...
+    h*c/sqrt(e*1e5*(2*m_e*c^2+e*1e5))*1e12);</pre>
+
+<div class="result"><b>loglog</b>：双对数坐标，适合展示幂律关系<br><b>randsample</b>：按概率权重随机抽样，模拟量子随机性<br><b>U&lt;20kV用非相对论</b>，<b>U&gt;20kV必须加相对论修正</b></div>
+
+<hr><p style="text-align:center;color:#999;font-size:10pt">— 20题逐行注释完成，可复制到MATLAB直接运行 —</p>
+</body></html>

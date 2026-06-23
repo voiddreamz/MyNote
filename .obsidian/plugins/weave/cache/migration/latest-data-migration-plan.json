@@ -1,5 +1,5 @@
 {
-  "createdAt": "2026-05-17T11:28:34.779Z",
+  "createdAt": "2026-06-21T02:15:29.382Z",
   "reason": "manual-review",
   "layout": {
     "parentFolder": "",
@@ -84,8 +84,10 @@
         "card": ".obsidian/plugins/weave/cache/indices/card-index.json",
         "deck": ".obsidian/plugins/weave/cache/indices/deck-index.json",
         "deckMembership": ".obsidian/plugins/weave/cache/indices/deck-membership-index.json",
+        "studyDue": ".obsidian/plugins/weave/cache/indices/study-due-index.json",
         "ir": ".obsidian/plugins/weave/cache/indices/ir-index.json",
-        "question": ".obsidian/plugins/weave/cache/indices/question-index.json"
+        "question": ".obsidian/plugins/weave/cache/indices/question-index.json",
+        "bodyFingerprint": ".obsidian/plugins/weave/cache/indices/body-fingerprint-index.json"
       },
       "cache": {
         "root": ".obsidian/plugins/weave/cache",
@@ -93,6 +95,11 @@
         "editorTemp": ".obsidian/plugins/weave/cache/editor-temp",
         "wdeckIndex": ".obsidian/plugins/weave/cache/wdeck-index.json",
         "wdeckConflicts": ".obsidian/plugins/weave/cache/wdeck-conflicts.json",
+        "questionBank": {
+          "root": ".obsidian/plugins/weave/cache/question-bank",
+          "inProgress": ".obsidian/plugins/weave/cache/question-bank/in-progress",
+          "sessionArchives": ".obsidian/plugins/weave/cache/question-bank/session-archives"
+        },
         "incrementalReading": {
           "root": ".obsidian/plugins/weave/cache/incremental-reading",
           "irCalendarCache": ".obsidian/plugins/weave/cache/incremental-reading/ir-calendar-cache.json",
@@ -147,7 +154,7 @@
   "activeSourceRoots": [],
   "targetRoot": "weave",
   "conflictsRoot": "weave/_migration_conflicts",
-  "backupPath": ".obsidian/plugins/weave/backups/data-migration-2026-05-17T11-28-34-779Z",
+  "backupPath": ".obsidian/plugins/weave/backups/data-migration-2026-06-21T02-15-29-382Z",
   "requiresMigration": false,
   "warnings": []
 }

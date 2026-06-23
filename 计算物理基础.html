@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>计算物理基础 — MATLAB 期末复习</title>
+<style>
+body {
+    font-family: "宋体", "SimSun", "Noto Serif CJK SC", serif;
+    font-size: 12pt;
+    line-height: 1.8;
+    max-width: 210mm;
+    margin: 20mm auto;
+    padding: 0 20px;
+    color: #1a1a1a;
+}
+h1 { font-size: 20pt; text-align: center; margin-bottom: 5px; }
+h2 {
+    font-size: 14pt; margin-top: 40px; margin-bottom: 10px;
+    padding: 6px 12px; border-bottom: 2px solid #333; background: #f0f4f8;
+    page-break-before: always;
+}
+h2:first-of-type { page-break-before: avoid; }
+h3 { font-size: 12pt; margin-top: 24px; margin-bottom: 8px; color: #2c3e50; }
+p.desc {
+    margin: 8px 0; padding: 8px 14px;
+    background: #f9f9f9; border-left: 3px solid #4472C4;
+}
+p.eq {
+    font-family: "Times New Roman", serif; font-style: italic;
+    text-align: center; margin: 6px 0; font-size: 12pt;
+}
+pre {
+    font-family: "Consolas", "Courier New", monospace; font-size: 10pt; line-height: 1.4;
+    background: #1e1e1e; color: #d4d4d4; padding: 10px 14px; border-radius: 5px;
+    overflow-x: auto; white-space: pre; tab-size: 4;
+}
+pre .cm { color: #6a9955; }  /* 注释绿 */
+pre .kw { color: #569cd6; }  /* 关键字蓝 */
+pre .fn { color: #dcdcaa; }  /* 函数黄 */
+pre .st { color: #ce9178; }  /* 字符串橙 */
+pre .nm { color: #b5cea8; }
+table {
+    border-collapse: collapse; margin: 10px auto; font-size: 11pt;
+}
+th, td { border: 1px solid #666; padding: 6px 12px; text-align: center; }
+th { background: #4472C4; color: #fff; }
+ul.tips { margin: 6px 0; padding-left: 20px; }
+li { margin: 5px 0; }
+.note { background: #fff3cd; padding: 8px 14px; margin: 10px 0; border-left: 3px solid #ffc107; }
+.warn { background: #fce4ec; padding: 8px 14px; margin: 10px 0; border-left: 3px solid #e91e63; }
+.summary-table { width: 100%; font-size: 10pt; }
+.summary-table th { font-size: 11pt; }
+@page { margin: 18mm 22mm; }
+@media print { body { margin: 0; } h2 { page-break-before: always; } }
+</style>
+</head>
+
+<body>
+
+<h1>计算物理基础 — MATLAB 期末复习</h1>
+<p style="text-align:center;font-size:10.5pt;color:#666;">彭芳麟 梁颖 &nbsp;|&nbsp; 5章核心命令 + 补充考点</p>
+
+<!-- =================================================================== -->
+<h2>第1章 MATLAB基础</h2>
+
+<h3>向量输入</h3>
+<pre>a = [3, 5, 7, 8]             <span class="cm">% 逗号或空格分隔</span>
+b = a'                        <span class="cm">% 转置</span>
+c = <span class="kw">1</span>:<span class="nm">2</span>:<span class="nm">13</span>                 <span class="cm">% start:step:end</span>
+d = linspace(<span class="nm">0</span>, <span class="nm">2</span>*pi, <span class="nm">20</span>)     <span class="cm">% 等间距 (起点,终点,点数)</span>
+e = logspace(<span class="nm">1</span>, <span class="nm">3</span>, <span class="nm">50</span>)          <span class="cm">% 对数等间距 10^1~10^3</span>
+A = [<span class="nm">2</span>, <span class="nm">4</span>, <span class="nm">5</span>; <span class="nm">9</span>, <span class="nm">7</span>, <span class="nm">1</span>]        <span class="cm">% 分号换行</span></pre>
+
+<h3>数组运算 vs 矩阵运算（高频考点）</h3>
+<pre><span class="cm">% 数组运算（逐元素）：每个元素独立运算</span>
+A .* B    A ./ B    A .^ <span class="nm">2</span>       <span class="cm">% 点开头 = 逐元素</span>
+sin(A)    exp(A)                  <span class="cm">% 数学函数默认逐元素</span>
+
+<span class="cm">% 矩阵运算（线性代数）：按矩阵法则</span>
+A * B      A / B      A ^ <span class="nm">2</span>       <span class="cm">% 无点 = 矩阵运算</span>
+inv(A)      A'                     <span class="cm">% 求逆、转置</span>
+<span class="kw">sum</span>(A)      <span class="kw">mean</span>(A)     <span class="kw">max</span>(A)       <span class="cm">% 对列作运算</span></pre>
+
+<h3>逻辑运算与索引</h3>
+<pre>A = [<span class="nm">1</span>, <span class="nm">3</span>, <span class="nm">-1</span>, <span class="nm">0</span>, <span class="nm">7</span>, <span class="nm">2</span>];
+B = ~(A><span class="nm">2</span>)                   <span class="cm">% 逻辑非 → [1 0 1 1 0 1]</span>
+C = (A><span class="nm">0</span>) & (A<<span class="nm">3</span>)           <span class="cm">% 逻辑与 → [1 0 0 0 0 1]</span>
+D = A(B)                   <span class="cm">% 条件索引：取出B中true对应的A元素</span>
+A(A><span class="nm">2</span>) = <span class="nm">0</span>                <span class="cm">% 条件赋值：大于2的置0</span></pre>
+
+<h3>流程控制（for / while / if / switch）</h3>
+<pre><span class="cm">% for — 固定次数循环</span>
+<span class="kw">for</span> k = <span class="nm">1</span>:<span class="nm">10</span>
+    x(k) = k^<span class="nm">2</span>;
+<span class="kw">end</span>
+
+<span class="cm">% while — 条件循环（需计数器+中止条件）</span>
+n = <span class="nm">1</span>;
+<span class="kw">while</span> <span class="kw">prod</span>(<span class="nm">1</span>:n) < <span class="nm">1e10</span>    <span class="cm">% 求小于1e10的最大阶乘数</span>
+    n = n + <span class="nm">1</span>;
+<span class="kw">end</span>
+
+<span class="cm">% switch — 多分支选择</span>
+<span class="kw">switch</span> var
+    <span class="kw">case</span> <span class="st">'N'</span>, mu = <span class="nm">28e-3</span>;
+    <span class="kw">case</span> <span class="st">'O'</span>, mu = <span class="nm">32e-3</span>;
+    <span class="kw">otherwise</span>, <span class="kw">warning</span>(<span class="st">'无效输入'</span>);
+<span class="kw">end</span></pre>
+
+<h3>三种定义函数的方式</h3>
+<pre><span class="cm">% ① 匿名函数 @ — 最常用、最推荐</span>
+f = @(x, t) cos(x.^<span class="nm">2</span>).^<span class="nm">2</span> + t;
+f(<span class="nm">3</span>, <span class="nm">2.1</span>)                     <span class="cm">% ans = 2.9302</span>
+
+<span class="cm">% ② inline — 旧版方式（仍可能考）</span>
+f = inline(<span class="st">'cos(x.^2).^2 + t'</span>, <span class="st">'x'</span>, <span class="st">'t'</span>);
+
+<span class="cm">% ③ 函数文件 — 独立 .m 文件</span>
+<span class="kw">function</span> F = test2(x, theta)
+    F = cos(x.^<span class="nm">2</span>).^<span class="nm">2</span> + theta;
+<span class="kw">end</span></pre>
+
+<h3>符号变量 syms / subs</h3>
+<pre>syms x theta                          <span class="cm">% 创建符号变量</span>
+F = cos(x^<span class="nm">2</span>)^<span class="nm">2</span> + theta;                <span class="cm">% 符号表达式</span>
+subs(F, {x, theta}, {<span class="nm">3</span>, <span class="nm">2.1</span>})        <span class="cm">% 代入求值</span></pre>
+
+<h3>全局变量 global</h3>
+<pre><span class="cm">% 函数文件间传递数据</span>
+<span class="kw">global</span> m k g
+m = <span class="nm">1</span>; k = <span class="nm">80</span>; g = <span class="nm">9.8</span>;
+<span class="cm">% 每个使用这些变量的函数文件里也要声明 global m k g</span></pre>
+
+<h3>其他常用指令</h3>
+<pre>input(<span class="st">'提示文字'</span>)         <span class="cm">% 从键盘读取输入</span>
+disp(<span class="st">'显示内容'</span>)           <span class="cm">% 屏幕输出</span>
+pause(n)                <span class="cm">% 暂停 n 秒</span>
+error(<span class="st">'错误信息'</span>)       <span class="cm">% 终止程序+输出错误</span>
+warning(<span class="st">'警告信息'</span>)      <span class="cm">% 输出警告但不终止</span>
+format long             <span class="cm">% 显示更多位小数</span>
+numel(A)                <span class="cm">% 数组元素总数</span>
+length(A)               <span class="cm">% 最大维度长度</span>
+size(A)                 <span class="cm">% 各维度大小</span></pre>
+
+<h3>二维作图（高频考点）</h3>
+<table>
+<tr><th>指令</th><th>功能</th><th>指令</th><th>功能</th></tr>
+<tr><td>plot</td><td>曲线</td><td>bar</td><td>直方图</td></tr>
+<tr><td>ezplot</td><td>符号函数曲线</td><td>polar</td><td>极坐标</td></tr>
+<tr><td>loglog</td><td>双对数坐标</td><td>semilogx/y</td><td>单对数坐标</td></tr>
+<tr><td>stairs</td><td>阶梯图</td><td>stem</td><td>火柴杆图</td></tr>
+<tr><td>hist</td><td>频数直方图</td><td>errorbar</td><td>误差棒图</td></tr>
+<tr><td>contour</td><td>等高线</td><td>quiver</td><td>矢量场箭头</td></tr>
+<tr><td>fill</td><td>多边形填色</td><td>patch</td><td>三维面片</td></tr>
+<tr><td>image/imagesc</td><td>色块图</td><td>pcolor</td><td>假彩色图</td></tr>
+<tr><td>comet</td><td>彗星曲线</td><td>compass/feather</td><td>复数矢量</td></tr>
+</table>
+
+<pre><span class="cm">% 子图 + 标注 (几乎每道题都用)</span>
+subplot(<span class="nm">2</span>,<span class="nm">2</span>,<span class="nm">1</span>);  plot(x, y, <span class="st">'r-o'</span>, <span class="st">'LineWidth'</span>, <span class="nm">1.5</span>);
+<span class="fn">xlabel</span>(<span class="st">'x'</span>);  <span class="fn">ylabel</span>(<span class="st">'y'</span>);  <span class="fn">title</span>(<span class="st">'标题'</span>);
+<span class="fn">legend</span>(<span class="st">'曲线1'</span>, <span class="st">'曲线2'</span>);  <span class="fn">grid</span> <span class="kw">on</span>;
+axis([<span class="nm">0</span>, <span class="nm">10</span>, <span class="nm">-1</span>, <span class="nm">1</span>]);    <span class="cm">% [xmin xmax ymin ymax]</span>
+axis equal              <span class="cm">% 等比例坐标轴</span>
+hold on; ... hold off;  <span class="cm">% 叠加绘图</span></pre>
+
+<h3>三维作图</h3>
+<pre><span class="cm">% 空间曲面 — 三部曲</span>
+[X, Y] = meshgrid(-<span class="nm">8</span>:<span class="nm">0.5</span>:<span class="nm">8</span>);     <span class="cm">% ① 网格</span>
+R = sqrt(X.^<span class="nm">2</span> + Y.^<span class="nm">2</span>) + eps;
+Z = sin(R) ./ R;               <span class="cm">% ② 函数</span>
+surf(X, Y, Z)                  <span class="cm">% ③ 画图</span>
+
+<span class="cm">% 其他三维指令</span>
+plot3(x,y,z)                   <span class="cm">% 三维曲线</span>
+mesh(X,Y,Z)                    <span class="cm">% 网格图</span>
+sphere(<span class="nm">40</span>)                    <span class="cm">% 球体</span>
+cylinder([<span class="nm">1</span>,<span class="nm">0</span>],<span class="nm">3</span>)           <span class="cm">% 柱体</span>
+view(az, el)                   <span class="cm">% 视角(方位角,仰角)</span></pre>
+
+<h3>切片图（四维数据）</h3>
+<pre>[x,y,z] = meshgrid(-<span class="nm">2</span>:<span class="nm">0.2</span>:<span class="nm">2</span>);
+v = x .* exp(-x.^<span class="nm">2</span>-y.^<span class="nm">2</span>-z.^<span class="nm">2</span>);
+slice(v, [<span class="nm">5</span>, <span class="nm">15</span>], <span class="nm">15</span>, <span class="nm">10</span>);
+colorbar(<span class="st">'horiz'</span>)                <span class="cm">% 水平颜色标尺</span></pre>
+
+<h3>动画</h3>
+<pre><span class="cm">% 方法一：实时动画（句柄控制 — 常用）</span>
+h = plot(x, y);                     <span class="cm">% 获取句柄</span>
+set(h, <span class="st">'EraseMode'</span>, <span class="st">'xor'</span>)          <span class="cm">% xor:替换旧对象; normal:重绘全图</span>
+<span class="kw">for</span> i = <span class="nm">2</span>:<span class="nm">60</span>
+    set(h, <span class="st">'XData'</span>, x_new, <span class="st">'YData'</span>, y_new);
+    drawnow                         <span class="cm">% 刷新屏幕</span>
+<span class="kw">end</span>
+
+<span class="cm">% 方法二：影片动画 movie</span>
+m = moviein(<span class="nm">40</span>);                   <span class="cm">% 预设40帧</span>
+<span class="kw">for</span> i = <span class="nm">1</span>:<span class="nm">40</span>
+    plot(...); m(:,i) = getframe;   <span class="cm">% 存入帧</span>
+<span class="kw">end</span>
+movie(m, <span class="nm">3</span>, <span class="nm">30</span>)                   <span class="cm">% 播放3次,每秒30帧</span></pre>
+
+<h3>物理场可视化指令</h3>
+<table>
+<tr><th>指令</th><th>功能</th><th>指令</th><th>功能</th></tr>
+<tr><td>contour3</td><td>三维等高线</td><td>contourf</td><td>填色等高线</td></tr>
+<tr><td>isosurface</td><td>等值面</td><td>isonormals</td><td>法线归一化</td></tr>
+<tr><td>streamslice</td><td>二维流线切片</td><td>streamline</td><td>三维流线</td></tr>
+<tr><td>streamtube</td><td>流管</td><td>streamribbon</td><td>流带</td></tr>
+<tr><td>coneplot</td><td>锥体(3D矢量)</td><td>quiver3</td><td>三维箭头</td></tr>
+</table>
+
+<h3>复数运算</h3>
+<pre><span class="cm">% 画图时直接用复数坐标</span>
+plot(Z) = plot(real(Z), imag(Z))   <span class="cm">% 自动拆为实部+虚部</span>
+C = A + i*B;                         <span class="cm">% 1i = 虚数单位</span>
+C1 = C * exp(i*pi/<span class="nm">3</span>);               <span class="cm">% 复指数 = 向量旋转</span></pre>
+
+<div class="note">
+<b>易错点：</b>MATLAB中 <b>i 和 j 都可以表示虚数单位</b>，但若定义了同名变量会被覆盖。建议用 <b>1i</b> 或 <b>1j</b>（即便被覆盖也不影响）。
+</div>
+
+<!-- =================================================================== -->
+<h2>第1章补充：应用实例</h2>
+
+<h3>双缝干涉光强分布</h3>
+<pre>ym = <span class="nm">1.25</span>; y = linspace(-ym, ym, <span class="nm">101</span>);
+d = <span class="nm">2</span>; A = <span class="nm">1</span>; z = <span class="nm">1000</span>; lambda = <span class="nm">5e-4</span>;
+L1 = sqrt((y-d/<span class="nm">2</span>).^<span class="nm">2</span> + z^<span class="nm">2</span>);
+L2 = sqrt((y+d/<span class="nm">2</span>).^<span class="nm">2</span> + z^<span class="nm">2</span>);
+phi = <span class="nm">2</span>*pi*(L2-L1)/lambda;
+I = (<span class="nm">2</span>*A*cos(phi/<span class="nm">2</span>)).^<span class="nm">2</span>;
+plot(y, I); axis([-ym, ym, <span class="nm">0</span>, <span class="nm">4</span>]);
+B = I*<span class="nm">255</span>/<span class="nm">5</span>; image(B); colormap(gray(<span class="nm">255</span>));  <span class="cm">% 条纹可视化</span></pre>
+
+<h3>Logistic 模型 — 费根鲍姆图（混沌入门）</h3>
+<pre>u = <span class="nm">2.6</span>:<span class="nm">0.001</span>:<span class="nm">4</span>;  x = <span class="nm">0.6</span>;
+<span class="kw">for</span> j = <span class="nm">1</span>:<span class="nm">150</span>,  x = u .* (x - x.^<span class="nm">2</span>);  <span class="kw">end</span>  <span class="cm">% 舍弃暂态</span>
+<span class="kw">for</span> i = <span class="nm">1</span>:<span class="nm">100</span>
+    x = u .* (x - x.^<span class="nm">2</span>);
+    plot(u, x, <span class="st">'r.'</span>);  hold on;
+<span class="kw">end</span></pre>
+
+<h3>李雅普诺夫指数</h3>
+<pre>x = <span class="nm">0.5</span>;  u = <span class="nm">3</span>:<span class="nm">0.0001</span>:<span class="nm">4</span>;  y = <span class="nm">0</span>;  N = <span class="nm">300</span>;
+<span class="kw">for</span> j = <span class="nm">1</span>:N
+    x = u .* (x - x.^<span class="nm">2</span>);
+    y = y + log(abs(u - <span class="nm">2</span>*u.*x));
+<span class="kw">end</span>
+plot(u, y/N)</pre>
+
+<!-- =================================================================== -->
+<h2>第2章 迭代—分形</h2>
+
+<h3>分形树（四种写法由繁到简）</h3>
+<pre><span class="cm">% 版本4 — 最简洁：利用自相似性整体缩放</span>
+u = [<span class="nm">0</span>, <span class="nm">1i</span>];
+<span class="kw">for</span> k = <span class="nm">2</span>:<span class="nm">8</span>
+    m = u / <span class="nm">3</span>;                         <span class="cm">% 缩小到1/3</span>
+    uu = [m, <span class="nm">1i</span>/<span class="nm">3</span>+m*sqrt(<span class="nm">3</span>)*<span class="nm">0.5</span>+<span class="nm">0.5i</span>), ...
+          m+<span class="nm">1i</span>/<span class="nm">3</span>, <span class="nm">2i</span>/<span class="nm">3</span>+m*sqrt(<span class="nm">3</span>)*<span class="nm">0.5</span>-<span class="nm">0.5i</span>), m+<span class="nm">2i</span>/<span class="nm">3</span>];
+    plot(uu); axis([-<span class="nm">0.5</span>,<span class="nm">0.5</span>,<span class="nm">0</span>,<span class="nm">1</span>]);
+    u = uu;
+<span class="kw">end</span></pre>
+
+<h3>Sierpinski三角形 — 递归调用（必考！）</h3>
+<pre><span class="kw">function</span> sjx(A1, A2, A3, N1)          <span class="cm">% 标准递归格式</span>
+    B1 = (A1+A2)/<span class="nm">2</span>;  B2 = (A1+A3)/<span class="nm">2</span>;  B3 = (A2+A3)/<span class="nm">2</span>;
+    N2 = N1 - <span class="nm">1</span>;                           <span class="cm">% 终止条件控制</span>
+    <span class="kw">if</span> N2 > <span class="nm">0</span>
+        sjx(A1, B1, B2, N2);             <span class="cm">% 递归：每次分3个新三角形</span>
+        sjx(B1, A2, B3, N2);
+        sjx(B2, B3, A3, N2);
+        fill(real([A1,A2,A3,A1]), imag([A1,A2,A3,A1]), <span class="st">'g'</span>);
+        hold on;
+        fill(real([B1,B2,B3,B1]), imag([B1,B2,B3,B1]), <span class="st">'w'</span>);
+    <span class="kw">end</span>
+<span class="kw">end</span></pre>
+
+<h3>Koch雪花 — 向量化写法</h3>
+<pre>new = [<span class="nm">0</span>, <span class="nm">1i</span>, sqrt(<span class="nm">3</span>)/<span class="nm">2</span>+<span class="nm">1i</span>/<span class="nm">2</span>, <span class="nm">0</span>];
+<span class="kw">for</span> k = <span class="nm">1</span>:<span class="nm">8</span>
+    old = new;
+    diff = (old(<span class="nm">2</span>:end) - old(<span class="nm">1</span>:end-<span class="nm">1</span>)) / <span class="nm">3</span>;
+    n = length(old) - <span class="nm">1</span>;
+    new(<span class="nm">1</span>:<span class="nm">4</span>:<span class="nm">4</span>*n-<span class="nm">3</span>) = old(<span class="nm">1</span>:end-<span class="nm">1</span>);
+    new(<span class="nm">2</span>:<span class="nm">4</span>:<span class="nm">4</span>*n-<span class="nm">2</span>) = old(<span class="nm">1</span>:end-<span class="nm">1</span>) + diff;
+    new(<span class="nm">3</span>:<span class="nm">4</span>:<span class="nm">4</span>*n-<span class="nm">1</span>) = new(<span class="nm">2</span>:<span class="nm">4</span>:<span class="nm">4</span>*n-<span class="nm">2</span>) + diff*(<span class="nm">0.5</span>+<span class="nm">0.5</span>*sqrt(<span class="nm">3</span>)*<span class="nm">1i</span>);
+    new(<span class="nm">4</span>:<span class="nm">4</span>:<span class="nm">4</span>*n) = old(<span class="nm">1</span>:end-<span class="nm">1</span>) + <span class="nm">2</span>*diff;
+    new(<span class="nm">4</span>*n+<span class="nm">1</span>) = old(end);
+    plot(new); axis equal;
+<span class="kw">end</span></pre>
+
+<h3>Julia集</h3>
+<pre>C = <span class="nm">1i</span>;
+V = linspace(-<span class="nm">2.0</span>, <span class="nm">2.0</span>, <span class="nm">400</span>);
+[Re, Im] = meshgrid(V);
+Z = Re + <span class="nm">1i</span>*Im;
+B = <span class="nm">0</span>;
+<span class="kw">for</span> K = <span class="nm">1</span>:<span class="nm">100</span>
+    B = B + (abs(Z) <= <span class="nm">2</span>);            <span class="cm">% 未逃离的点累加亮度</span>
+    Z = Z.*Z + C;
+<span class="kw">end</span>
+imagesc(B);  colormap(jet);  axis equal</pre>
+
+<h3>Mandelbrot集（与Julia集的区别：C是Z的初值）</h3>
+<pre>V = linspace(-<span class="nm">2.0</span>, <span class="nm">1.0</span>, <span class="nm">600</span>);
+Vy = linspace(-<span class="nm">1.2</span>, <span class="nm">1.2</span>, <span class="nm">400</span>);
+[Re, Im] = meshgrid(V, Vy);
+C = Re + <span class="nm">1i</span>*Im;
+Z = zeros(size(C));
+K = zeros(size(C));
+<span class="kw">for</span> n = <span class="nm">1</span>:<span class="nm">100</span>
+    Z = Z.^<span class="nm">2</span> + C;
+    K(abs(Z) > <span class="nm">2</span> & K == <span class="nm">0</span>) = n;    <span class="cm">% 记录首次逃离的迭代次数</span>
+<span class="kw">end</span>
+imagesc(K); colormap(jet); axis equal</pre>
+
+<div class="note">
+<b>分形维：</b>豪斯道夫维数（自相似维数）和盒维数——分维是尺度变换下不随尺度改变的不变量。Sierpinski三角形的分维 = log3/log2 ≈ 1.585。
+</div>
+
+<!-- =================================================================== -->
+<h2>第3章 数值微分与积分</h2>
+
+<h3>diff — 差分</h3>
+<pre>a = [<span class="nm">1</span>, <span class="nm">4</span>, <span class="nm">5</span>, -<span class="nm">2</span>];
+diff(a)                        <span class="cm">% ans = 3  1  -7  （后项减前项）</span>
+diff(b)                        <span class="cm">% 矩阵：默认对每列作差分</span></pre>
+
+<h3>gradient — 梯度（中心差分，比diff更精确）</h3>
+<pre>a = [<span class="nm">1</span>, <span class="nm">5</span>, <span class="nm">4</span>, <span class="nm">2</span>, <span class="nm">7</span>; <span class="nm">2</span>, <span class="nm">1</span>, <span class="nm">8</span>, <span class="nm">3</span>, <span class="nm">4</span>];
+[px, py] = gradient(a)         <span class="cm">% px=行方向偏导, py=列方向偏导</span>
+<span class="cm">% 边界点用单边差商，内部点用中心差商</span></pre>
+
+<h3>del2 — 离散拉普拉斯算子 ∇²</h3>
+<pre>[x,y] = meshgrid(-<span class="nm">2</span>:<span class="nm">2</span>, -<span class="nm">3</span>:<span class="nm">3</span>);
+U = x.*x + y.*y;
+V = <span class="nm">4</span> * del2(U)                <span class="cm">% 对U=x²+y²: ∇²U=4 → V全为4 ✓</span></pre>
+
+<h3>trapz — 梯形积分（离散数据）</h3>
+<pre>a = [<span class="nm">1</span>, <span class="nm">5</span>, <span class="nm">7</span>, <span class="nm">2</span>, <span class="nm">3</span>];  trapz(a)   <span class="cm">% ans = 16</span>
+trapz(b)                                  <span class="cm">% 矩阵默认按列积分</span>
+trapz(b, <span class="nm">2</span>)                                <span class="cm">% 指定按行积分</span></pre>
+
+<h3>cumtrapz — 累计梯形积分</h3>
+<pre>cumtrapz(b)     <span class="cm">% 返回和trapz同样大小，最后一行 = trapz(b)的结果</span></pre>
+
+<h3>quad / quadl — 连续函数积分</h3>
+<table>
+<tr><th>指令</th><th>算法</th><th>精度</th></tr>
+<tr><td>quad</td><td>自适应Simpson</td><td>较低</td></tr>
+<tr><td>quadl</td><td>自适应Lobatto</td><td>较高</td></tr>
+</table>
+
+<pre>f = @(x) exp(x.^(-<span class="nm">3</span>));
+quad(f, <span class="nm">0.5</span>, <span class="nm">0.6</span>)                   <span class="cm">% ans ≈ 71.5465</span>
+
+<span class="cm">% 含参数积分 — 参数跟在积分区间后面</span>
+quad(@betaf, <span class="nm">0</span>, <span class="nm">1</span>, <span class="nm">1e-6</span>, z, w)
+<span class="cm">% 格式: quad(fun, a, b, tol, p1, p2, …)</span>
+
+<span class="cm">% 对矩阵型函数的积分 — tol参数后也可指定trace参数</span></pre>
+
+<h3>多重积分</h3>
+<pre><span class="cm">% dblquad(fun, xmin, xmax, ymin, ymax)    二重积分</span>
+<span class="cm">% triplequad(fun, xmin, xmax, ymin, ymax, zmin, zmax)  三重积分</span>
+
+triplequad(@(x,y,z) y*sin(x)+z*cos(x), <span class="nm">0</span>, pi, <span class="nm">0</span>, <span class="nm">1</span>, -<span class="nm">1</span>, <span class="nm">1</span>)
+<span class="cm">% ans = 2</span></pre>
+
+<h3>符号工具箱微积分</h3>
+<pre>syms x
+diff(f, x)          <span class="cm">% 符号微分</span>
+int(f, x)           <span class="cm">% 符号积分</span>
+limit(f, x, <span class="nm">0</span>)       <span class="cm">% 极限</span>
+taylor(f, x, <span class="nm">5</span>)     <span class="cm">% 5阶泰勒展开</span>
+symsum(f, n)        <span class="cm">% 无穷级数求和</span>
+simple(f)           <span class="cm">% 表达式化简</span></pre>
+
+<!-- =================================================================== -->
+<h2>第4章 数据处理</h2>
+
+<h3>插值 interp1</h3>
+<p class="eq">yi = interp1(X, Y, XI, 'method')</p>
+<table>
+<tr><th>method</th><th>方法</th><th>特点</th></tr>
+<tr><td>'nearest'</td><td>最近邻</td><td>阶梯状，最快</td></tr>
+<tr><td>'linear'</td><td>线性插值</td><td>默认，折线</td></tr>
+<tr><td>'spline'</td><td>三次样条</td><td>光滑，二阶导数连续</td></tr>
+<tr><td>'pchip'</td><td>保形三次</td><td>不过冲，一阶导数连续</td></tr>
+</table>
+
+<pre>x = <span class="nm">0</span>:<span class="nm">10</span>;  y = sin(x);
+xi = <span class="nm">0</span>:<span class="nm">0.15</span>:<span class="nm">10</span>;
+yi = interp1(x, y, xi, <span class="st">'spline'</span>);
+plot(x, y, <span class="st">'o'</span>, xi, yi, <span class="st">'-'</span>);
+
+<span class="cm">% 二维/三维插值</span>
+interp2(X, Y, Z, XI, YI, <span class="st">'method'</span>)
+interp3(X, Y, Z, V, XI, YI, ZI)</pre>
+
+<h3>多项式拟合 polyfit / polyval</h3>
+<pre>P = polyfit(x, y, n)          <span class="cm">% n次拟合 → 系数向量[降幂排列]</span>
+y_fit = polyval(P, x)         <span class="cm">% 计算拟合值</span>
+
+<span class="cm">% 例：二次拟合含噪声数据</span>
+t = <span class="nm">0</span>:<span class="nm">0.5</span>:<span class="nm">5</span>;  s = <span class="nm">1</span>*t + <span class="nm">0.2</span>*t.^<span class="nm">2</span>;   <span class="cm">% 真实二次曲线</span>
+ss = s + <span class="nm">0.3</span>*randn(size(t));           <span class="cm">% 加噪声</span>
+P = polyfit(t, ss, <span class="nm">2</span>);
+y = polyval(P, t);
+plot(t, ss, <span class="st">'r*'</span>, t, y, <span class="st">'b-'</span>);</pre>
+
+<h3>指数拟合技巧</h3>
+<pre><span class="cm">% I = I0*exp(-αx)  →  取对数: ln(I) = ln(I0) - αx</span>
+x = [<span class="nm">0.2</span>, <span class="nm">0.3</span>, <span class="nm">0.4</span>, <span class="nm">0.5</span>, <span class="nm">0.6</span>, <span class="nm">0.7</span>, <span class="nm">0.8</span>];
+I = [<span class="nm">3.16</span>, <span class="nm">2.38</span>, <span class="nm">1.75</span>, <span class="nm">1.34</span>, <span class="nm">1.00</span>, <span class="nm">0.74</span>, <span class="nm">0.56</span>];
+y = log(I);
+P = polyfit(x, y, <span class="nm">1</span>);             <span class="cm">% ans = -2.8883  1.7283</span>
+I0 = exp(P(<span class="nm">2</span>));      alpha = -P(<span class="nm">1</span>);
+<span class="cm">% I0 = 5.6311,  α = 2.8883</span></pre>
+
+<h3>cftool — 图形界面拟合</h3>
+<pre>cftool          <span class="cm">% 弹出曲线拟合工具箱窗口，支持多种拟合模型</span></pre>
+
+<h3>求零点</h3>
+<pre><span class="cm">% fzero — 单变量函数零点（数值）</span>
+x = fzero(@sin, <span class="nm">3</span>)                           <span class="cm">% 函数句柄 → 3.1416</span>
+x = fzero(@(x) x.^<span class="nm">2</span>-<span class="nm">2</span>, <span class="nm">1</span>)                  <span class="cm">% 匿名函数</span>
+x = fzero(fun, [x0(<span class="nm">1</span>), x0(<span class="nm">2</span>)])             <span class="cm">% 区间端点异号时最可靠!</span>
+
+<span class="cm">% roots — 多项式全部根（数值）</span>
+roots([<span class="nm">5</span>, <span class="nm">3</span>, -<span class="nm">4</span>, <span class="nm">1</span>, <span class="nm">7</span>, <span class="nm">9</span>])                 <span class="cm">% 系数降幂排列</span>
+
+<span class="cm">% solve — 符号方程求解</span>
+syms x;  solve(x^<span class="nm">2</span> - <span class="nm">4</span> == <span class="nm">0</span>)            <span class="cm">% 符号解，返回所有根</span></pre>
+
+<h3>fsolve — 非线性方程组</h3>
+<pre><span class="kw">function</span> Y = myfun(X)
+    Y = [<span class="nm">2</span>*cos(X(<span class="nm">1</span>)) + sqrt(X(<span class="nm">2</span>)) - log(X(<span class="nm">3</span>)) - <span class="nm">7</span>;
+         <span class="nm">2</span>^X(<span class="nm">1</span>) + <span class="nm">2</span>*X(<span class="nm">2</span>) - <span class="nm">8</span>*X(<span class="nm">3</span>) + <span class="nm">1</span>;
+         X(<span class="nm">1</span>) + X(<span class="nm">2</span>) - cosh(X(<span class="nm">3</span>))];
+<span class="kw">end</span>
+x = fsolve(@myfun, [<span class="nm">1</span>;<span class="nm">1</span>;<span class="nm">1</span>]);     <span class="cm">% [1;1;1] = 初值猜测</span></pre>
+
+<h3>求极小值</h3>
+<pre><span class="cm">% fminbnd — 单变量，指定区间</span>
+f = @(x) -<span class="nm">1</span>./((x-<span class="nm">.3</span>).^<span class="nm">2</span>+.<span class="nm">01</span>) - <span class="nm">1</span>./((x-<span class="nm">.9</span>).^<span class="nm">2</span>+.<span class="nm">04</span>) + <span class="nm">6</span>;
+x_min = fminbnd(f, <span class="nm">0</span>, <span class="nm">0.4</span>)       <span class="cm">% 在[0,0.4]内找极小值 → 0.30038</span>
+<span class="cm">% 算法: 黄金分割法 + 抛物线插值法</span>
+
+<span class="cm">% fminsearch — 多变量，无需导数</span>
+x_min = fminsearch(fun, x0)         <span class="cm">% Nelder-Mead单纯形法</span></pre>
+
+<h3>fzero带参数的三种写法</h3>
+<pre><span class="cm">% ① 匿名函数包装：fzero(@(x) fun(x, a, b), x0)</span>
+a = <span class="nm">2</span>;
+x = fzero(@(x) cos(a*x), <span class="nm">0.1</span>);
+
+<span class="cm">% ② 多层匿名函数：</span>
+B = @(x, n, y) besselj(n, x) - y;
+fzero(@(x) B(x, <span class="nm">0</span>, <span class="nm">0.5</span>), [<span class="nm">0</span>, <span class="nm">2</span>]);
+
+<span class="cm">% ③ inline函数（旧版）：</span>
+f = inline(<span class="st">'5*x^5+3*x^4-4*x^3+x^2+7*x+9'</span>);
+fzero(f, <span class="nm">1</span>);</pre>
+
+<h3>optimset — 优化选项</h3>
+<pre>options = optimset(<span class="st">'tolx'</span>, <span class="nm">1e-6</span>, <span class="st">'display'</span>, <span class="st">'iter'</span>);
+fzero(fun, x0, options);         <span class="cm">% 用于 fzero/fsolve/fminbnd 等</span></pre>
+
+<h3>FFT — 快速傅里叶变换</h3>
+<table>
+<tr><th>指令</th><th>功能</th><th>指令</th><th>功能</th></tr>
+<tr><td>fft(x)</td><td>一维FFT</td><td>ifft(X)</td><td>一维逆FFT</td></tr>
+<tr><td>fft(x, N)</td><td>N点FFT</td><td>fft2(x)</td><td>二维FFT</td></tr>
+<tr><td>ifft2(X)</td><td>二维逆FFT</td><td>fftn(x)</td><td>N维FFT</td></tr>
+</table>
+
+<pre><span class="cm">% 功率谱密度</span>
+Y = fft(y, <span class="nm">256</span>);
+Pyy = Y .* conj(Y) / <span class="nm">256</span>;         <span class="cm">% 或 abs(Y).^2/256</span>
+f = <span class="nm">1000</span>/<span class="nm">256</span> * (<span class="nm">0</span>:<span class="nm">127</span>);
+plot(f, Pyy(<span class="nm">1</span>:<span class="nm">128</span>));
+
+<span class="cm">% 另一种频率轴写法</span>
+Y = fft(x);
+m = abs(Y);
+f = (<span class="nm">0</span>:numel(Y)-<span class="nm">1</span>)' * Fs / numel(Y);     <span class="cm">% Fs = 采样频率</span>
+plot(f, m);
+xlabel(<span class="st">'Frequency (Hz)'</span>);</pre>
+
+<div class="note">
+<b>FFT结果的对称性：</b>前半部分 = 正频率分量，后半部分 = 共轭（负频率）。实际绘图只取前半部分（1:N/2+1）。Y(1) = 直流分量，Y(N/2+1) = Nyquist频率。
+</div>
+
+<!-- =================================================================== -->
+<h2>第5章 解常微分方程</h2>
+
+<h3>把高阶ODE化为一阶组（必考）</h3>
+<p class="eq">例：y'' = -y &nbsp;&rarr;&nbsp; 设 y₁=y, y₂=y' &nbsp;&rarr;&nbsp; y₁'=y₂, y₂'=-y₁</p>
+
+<pre><span class="cm">% 写法一：匿名函数（最常用）</span>
+F = @(t, y) [y(<span class="nm">2</span>); -y(<span class="nm">1</span>)]
+[T, Y] = ode45(F, [<span class="nm">0</span>, <span class="nm">10</span>], [<span class="nm">0</span>, <span class="nm">2</span>])   <span class="cm">% (时间范围, 初值)</span>
+
+<span class="cm">% 写法二：矩阵形式</span>
+F = @(t, y) [<span class="nm">0</span>, <span class="nm">1</span>; -<span class="nm">1</span>, <span class="nm">0</span>] * y
+
+<span class="cm">% 写法三：子函数（复杂问题推荐）</span>
+<span class="kw">function</span> main
+    [T, Y] = ode45(@myode, [<span class="nm">0</span>, <span class="nm">10</span>], [<span class="nm">0</span>, <span class="nm">2</span>]);
+    plot(T, Y(:,<span class="nm">1</span>));       <span class="cm">% Y(:,1)=y, Y(:,2)=y'</span>
+<span class="kw">end</span>
+<span class="kw">function</span> ydot = myode(t, y)
+    ydot = [y(<span class="nm">2</span>); -y(<span class="nm">1</span>)];
+<span class="kw">end</span></pre>
+
+<h3>ode求解器速查</h3>
+<table>
+<tr><th>指令</th><th>适用</th><th>方法</th><th>说明</th></tr>
+<tr><td>ode45</td><td>非刚性（首选）</td><td>四/五阶RK</td><td>最常用</td></tr>
+<tr><td>ode23</td><td>非刚性</td><td>二/三阶RK</td><td>低精度快速</td></tr>
+<tr><td>ode113</td><td>非刚性</td><td>变阶Adams</td><td>高精度光滑问题</td></tr>
+<tr><td>ode15s</td><td><b>刚性</b></td><td>数值微分法</td><td>刚性首选</td></tr>
+<tr><td>ode23s</td><td><b>刚性</b></td><td>Rosenbrock</td><td>低阶刚性</td></tr>
+<tr><td>ode23t</td><td>中度刚性</td><td>梯形法则</td><td>无数值阻尼</td></tr>
+<tr><td>ode23tb</td><td>刚性</td><td>TR-BDF2</td><td>替代ode15s</td></tr>
+</table>
+
+<div class="warn">
+<b>刚性方程：</b>解的某些分量变化非常快而另一些变化很慢。用ode45会极慢 → 必须换ode15s或ode23s。
+</div>
+
+<h3>odeset — 选项设置（高频考点）</h3>
+<pre>options = odeset(<span class="st">'RelTol'</span>, <span class="nm">1e-6</span>, <span class="st">'AbsTol'</span>, <span class="nm">1e-8</span>)   <span class="cm">% 误差控制</span>
+options = odeset(<span class="st">'OutputFcn'</span>, <span class="st">'odephas2'</span>)            <span class="cm">% 输出相图</span>
+options = odeset(<span class="st">'Events'</span>, @events)                   <span class="cm">% 事件检测</span>
+options = odeset(<span class="st">'MaxStep'</span>, <span class="nm">0.01</span>)                    <span class="cm">% 最大步长</span></pre>
+
+<table class="summary-table">
+<tr><th>参数</th><th>默认</th><th>说明</th></tr>
+<tr><td>RelTol</td><td>1e-3</td><td>相对误差容限</td></tr>
+<tr><td>AbsTol</td><td>1e-6</td><td>绝对误差容限</td></tr>
+<tr><td>OutputFcn</td><td>odeplot</td><td>输出函数：odephas2(相位图), odephas3(3D相位), odeprint(打印)</td></tr>
+<tr><td>MaxStep</td><td>自动</td><td>最大步长限制</td></tr>
+<tr><td>InitialStep</td><td>自动</td><td>初始步长</td></tr>
+<tr><td>Refine</td><td>正整数</td><td>输出细化因子</td></tr>
+<tr><td>Stats</td><td>off</td><td>on时显示求解统计</td></tr>
+<tr><td>Events</td><td>无</td><td>事件函数句柄</td></tr>
+<tr><td>Jacobian</td><td>数值</td><td>雅可比矩阵（刚性方程建议提供）</td></tr>
+</table>
+
+<h3>deval — 在任意点插值</h3>
+<pre>sol = ode45(F, [<span class="nm">0</span>:<span class="nm">0.1</span>:<span class="nm">10</span>], [<span class="nm">0</span>, <span class="nm">1</span>]);
+ss = deval(sol, <span class="nm">5.15</span>);            <span class="cm">% 在 t=5.15 处的插值</span>
+
+<span class="cm">% sol 结构体域：sol.x(网格点), sol.y(解), sol.yp(导数)</span>
+<span class="cm">% sol.stats(统计), sol.solver(求解器名)</span></pre>
+
+<h3>事件 Events（必考模式）</h3>
+<pre><span class="kw">function</span> [value, isterminal, direction] = events(T, Y)
+    value = Y(<span class="nm">1</span>);             <span class="cm">% 事件条件：value=0时触发</span>
+    isterminal = <span class="nm">1</span>;           <span class="cm">% 1=触发后停止积分, 0=继续</span>
+    direction = <span class="nm">0</span>;            <span class="cm">% 0=双向检测, 1=正向, -1=负向</span>
+<span class="kw">end</span>
+
+opts = odeset(<span class="st">'events'</span>, @events);
+[t, y, tfinal] = ode45(@f, [<span class="nm">0</span>, Inf], y0, opts);
+<span class="cm">% tfinal = 事件触发时刻</span></pre>
+
+<h3>dsolve — 符号解ODE</h3>
+<pre>y = dsolve(<span class="st">'Dy = y^2 - y^3'</span>, <span class="st">'y(0) = 0.01'</span>);
+y = simplify(y);
+pretty(y)                        <span class="cm">% 美化显示</span>
+ezplot(y, [<span class="nm">0</span>, <span class="nm">200</span>])               <span class="cm">% 直接画图</span></pre>
+
+<h3>bvp4c — 边值问题</h3>
+<pre><span class="cm">% 三步：odefun(微分方程) + bcfun(边界条件) + solinit(初始猜测)</span>
+solinit = bvpinit(x, v);                <span class="cm">% x=网格点, v=猜测解</span>
+sol = bvp4c(@odefun, @bcfun, solinit);
+
+<span class="cm">% 含未知参数：</span>
+solinit = bvpinit(x, v, parameters);     <span class="cm">% 提供参数猜测值</span>
+sol.parameters                           <span class="cm">% 求解后的参数值</span>
+
+<span class="cm">% 延拓区间：</span>
+solinit = bvpinit(sol, [a_new, b_new]);  <span class="cm">% 利用旧解扩展区间</span></pre>
+
+<h3>打靶法（Shooting Method）概念</h3>
+<p class="desc"><b>打靶法</b>解本征值：尝试一个本征值 → 作为初值问题求解 → 检查是否满足边界条件 → 不满足则调整本征值重试 → 反复迭代至误差小于容许值。本质：把边值问题转化为多轮初值问题。</p>
+
+<!-- =================================================================== -->
+<h2>速记表</h2>
+
+<table class="summary-table">
+<tr><th>概念</th><th>要点</th></tr>
+<tr><td>数组 vs 矩阵运算</td><td>.* ./ .^ 逐元素；* / ^ 矩阵代数</td></tr>
+<tr><td>匿名函数 @</td><td>f = @(x) x.^2 — 首选方式</td></tr>
+<tr><td>数据网格</td><td>[X,Y] = meshgrid(x,y) — 3D绘图第一步</td></tr>
+<tr><td>句柄动画</td><td>set(h,'XData',...) + EraseMode + drawnow</td></tr>
+<tr><td>递归函数</td><td>函数调用自身，必须有终止条件</td></tr>
+<tr><td>数值积分</td><td>trapz(离散) / quad(连续) / dblquad(二重)</td></tr>
+<tr><td>拟合 vs 插值</td><td>polyfit可不过数据点 / interp1必经数据点</td></tr>
+<tr><td>插值方法选择</td><td>spline最光滑 / pchip不过冲 / linear最快</td></tr>
+<tr><td>求零点</td><td>fzero(单变量) / fsolve(方程组) / roots(多项式) / solve(符号)</td></tr>
+<tr><td>求极小值</td><td>fminbnd(单变量区间) / fminsearch(多变量)</td></tr>
+<tr><td>刚性ODE</td><td>解变化剧烈 → ode15s/ode23s 而非 ode45</td></tr>
+<tr><td>化高阶ODE技巧</td><td>y₁=y, y₂=y', y₃=y''... → 一阶组</td></tr>
+<tr><td>FFT输出</td><td>前半=正频率, 后半=共轭; Y(1)=直流, Y(N/2+1)=Nyquist</td></tr>
+<tr><td>复数运算</td><td>用1i/1j避免变量覆盖; plot(Z)=plot(real,imag)</td></tr>
+<tr><td>符号计算</td><td>syms → diff/int/limit/taylor/solve/dsolve</td></tr>
+<tr><td>事件Events</td><td>value(条件), isterminal(1=停止), direction(穿越方向)</td></tr>
+</table>
+
+<hr>
+<p style="text-align:center;color:#999;font-size:10pt;">— 期末复习总结完成 —</p>
+
+<!-- =================================================================== -->
+<h2>附录：开卷考试解题模板（按题型分类）</h2>
+<p class="desc">考试时根据题目类型，找到对应模板，替换参数即可。每类模板给出了核心代码骨架。</p>
+
+<!-- ---- 力学 ---- -->
+<h3>模板A：力学题（抛体、振动、滑落、摆）</h3>
+<p class="desc">凡是涉及"运动轨迹""速度变化"的力学问题 → <b>ODE + ode45</b></p>
+
+<pre><span class="cm">% ==== 力学题通用模板 ====</span>
+clear; close all;
+
+<span class="cm">% 1. 定义物理常数</span>
+g = 9.8; m = 1; k = 0.1;                        <span class="cm">% 重力、质量、阻力系数（按题改）</span>
+
+<span class="cm">% 2. 列运动方程，化为一阶ODE组</span>
+<span class="cm">%    一般形式：y(1)=位置, y(2)=速度, y(3)=位置2, y(4)=速度2…</span>
+odefun = @(t,y) [ ...
+    y(2);                                        <span class="cm">% 位置1的导数 = 速度1</span>
+    合外力/m;                                    <span class="cm">% 速度1的导数 = 加速度（根据题意改写）</span>
+    y(4);                                        <span class="cm">% 位置2的导数 = 速度2</span>
+    合外力/m                                     <span class="cm">% 速度2的导数</span>
+];
+
+<span class="cm">% 3. 设置事件（如果需要检测"落地""脱离"等特殊时刻）</span>
+opts = odeset(<span class="st">'Events'</span>, @(t,y) deal(...
+    事件条件表达式,    <span class="cm">% 例如 y(3) 表示落地; y(3)-y(1)*tan(α) 表示落到斜坡</span>
+    1,                          <span class="cm">% 1=触发后停止, 0=不停止</span>
+    -1));                       <span class="cm">% -1=向下穿越触发, 1=向上, 0=双向</span>
+
+<span class="cm">% 4. 用ode45求解</span>
+[T, Y] = ode45(odefun, [t_start, t_end], [初值1, 初值2, 初值3, 初值4], opts);
+
+<span class="cm">% 5. 提取需要的结果</span>
+Y(:,1)   <span class="cm">% 位置1随时间变化</span>
+Y(:,2)   <span class="cm">% 速度1随时间变化</span>
+Y(end,:) <span class="cm">% 最终时刻的全部状态</span>
+
+<span class="cm">% 6. 画图</span>
+figure;
+plot(T, Y(:,1));                                 <span class="cm">% 画位置-时间图</span>
+xlabel(<span class="st">'t(s)'</span>); ylabel(<span class="st">'x(m)'</span>); grid on;</pre>
+
+<p class="desc"><b>常见变体：</b></p>
+<ul style="font-size:10pt;margin:4px 0">
+<li>无阻力抛体 → 可直接用解析公式，不用ode45</li>
+<li>能量守恒问题(单摆、滑落) → 列能量方程→解出速度表达式→解析或fzero</li>
+<li>共振问题 → 直接用振幅公式 A=F₀/√[(k-mΩ²)²+(γΩ)²]</li>
+<li>变质量问题(链条滑落) → 列变质量牛顿方程→化ODE</li>
+</ul>
+
+<!-- ---- 光学 ---- -->
+<h3>模板B：光学题（干涉、衍射、光栅）</h3>
+<p class="desc">凡是涉及"光强分布""条纹"的问题 → <b>直接写光强公式 → 画曲线</b>，不需要ODE</p>
+
+<pre><span class="cm">% ==== 光学题通用模板 ====</span>
+clear; close all;
+lambda = 500e-9;                                 <span class="cm">% 波长 (按题改)</span>
+L = 1;                                           <span class="cm">% 观察距离</span>
+y = linspace(-0.01, 0.01, 2000);                 <span class="cm">% 屏上坐标范围（按题调整）</span>
+theta = atan(y/L);                               <span class="cm">% 衍射角</span>
+
+<span class="cm">% ---- 双缝干涉 ----</span>
+d = 0.001;                                       <span class="cm">% 双缝间距</span>
+k = 2*pi/lambda;
+delta_phi = k * d * y / L;                       <span class="cm">% 相位差 (远场近似)</span>
+I = 2 * (1 + cos(delta_phi));                    <span class="cm">% I₁=I₂=1时的干涉光强</span>
+
+<span class="cm">% ---- 单缝衍射 ----</span>
+a = 5e-6;                                        <span class="cm">% 缝宽</span>
+beta = pi * a * sin(theta) / lambda;
+I = (sin(beta)./beta).^2;                        <span class="cm">% sinc²(β)，beta=0处加eps防除零</span>
+
+<span class="cm">% ---- 光栅衍射 ----</span>
+a = 2e-6; b = 6e-6; d = a+b; N = 10;             <span class="cm">% 缝宽、挡板宽、光栅常数、缝数</span>
+beta = pi*a*sin(theta)/lambda;
+alpha_g = pi*d*sin(theta)/lambda;
+I = (sin(beta)./beta).^2 .* (sin(N*alpha_g)./sin(alpha_g)).^2;
+
+<span class="cm">% 画图</span>
+figure;
+plot(y*1000, I);                                 <span class="cm">% 横轴用mm单位</span>
+xlabel(<span class="st">'屏上位置(mm)'</span>); ylabel(<span class="st">'相对光强'</span>); grid on;</pre>
+
+<p class="desc"><b>陷阱提醒：</b>sin(β)/β 在 β=0 处是 0/0 → 加 +1e-12 或用 sinc 函数。光栅的 sin(Nα)/sin(α) 在 α=mπ 处也要防除零。</p>
+
+<!-- ---- 电磁 ---- -->
+<h3>模板C：电磁题（磁场、安培力、感应电动势）</h3>
+<p class="desc">核心公式：B=μ₀I/(2πr)（直导线），dF=I·dl×B（安培力），ε=-dΦ/dt（法拉第）</p>
+
+<pre><span class="cm">% ==== 电磁题通用模板 ====</span>
+clear; close all;
+mu0 = 4*pi*1e-7;                                 <span class="cm">% 真空磁导率（恒定常数）</span>
+
+<span class="cm">% ---- 类型1：长直导线的磁场分布 ----</span>
+I = 1; a = 0.1;                                  <span class="cm">% 电流、特征距离</span>
+x = linspace(-3*a, 3*a, 500);                    <span class="cm">% 坐标范围</span>
+B = mu0*I ./ (2*pi*abs(x));                      <span class="cm">% B=μ₀I/(2πr)，./是逐元素除</span>
+<span class="cm">% 多根导线：B_total = B1 + B2 + …（矢量叠加，注意方向）</span>
+
+<span class="cm">% ---- 类型2：安培力（含积分）----</span>
+I1 = 1; I2 = 0.5; d = 0.2;                       <span class="cm">% 两电流、距离</span>
+f = @(phi) I2 * mu0*I1/(2*pi) * a*sin(phi) ./ (d + a*cos(phi));
+F = integral(f, 0, pi);                          <span class="cm">% 从0到π积分求总力</span>
+
+<span class="cm">% ---- 类型3：感应电动势 ----</span>
+omega = 2*pi*10; t = linspace(0, 0.2, 500);
+<span class="kw">for</span> j = 1:length(t)
+    f_flux = @(x) 1 ./ (d + x*cos(omega*t(j)));  <span class="cm">% 被积函数</span>
+    Phi(j) = mu0*I/(2*pi) * integral(f_flux, -a, a); <span class="cm">% 计算磁通量</span>
+<span class="kw">end</span>
+epsilon = -gradient(Phi, t(2)-t(1));             <span class="cm">% ε=-dΦ/dt（用gradient求数值导）</span>
+
+figure; plot(t, epsilon);
+xlabel(<span class="st">'t(s)'</span>); ylabel(<span class="st">'ε(V)'</span>); grid on;</pre>
+
+<p class="desc"><b>关键函数：</b>integral(被积函数, 下限, 上限) 做定积分。gradient(y, dx) 求数值导数（比diff更准）。</p>
+
+<!-- ---- 量子 ---- -->
+<h3>模板D：量子物理题（势阱、康普顿散射、德布罗意波）</h3>
+<p class="desc">量子题一般为直接套公式计算+画图，不需要ODE。关键在于单位换算（J↔eV, m↔nm↔pm）。</p>
+
+<pre><span class="cm">% ==== 量子题通用模板 ====</span>
+clear; close all;
+h = 6.626e-34;  h_bar = 1.0546e-34;              <span class="cm">% 普朗克常数、约化普朗克常数</span>
+c = 2.998e8;  m_e = 9.109e-31;  e = 1.602e-19;   <span class="cm">% 光速、电子质量、电子电荷</span>
+
+<span class="cm">% ---- 类型1：一维无限深势阱 ----</span>
+L = 1e-9;                                        <span class="cm">% 阱宽（常给nm，要转m: ×1e-9）</span>
+n = 1:5;                                         <span class="cm">% 要算的能级数</span>
+E_n = n.^2 * pi^2 * h_bar^2 / (2*m_e*L^2);       <span class="cm">% 能级公式 Eₙ∝n²</span>
+x = linspace(0, L, 500);
+psi = sqrt(2/L) * sin(n(1)*pi*x/L);              <span class="cm">% 波函数 ψ=√(2/L)sin(nπx/L)</span>
+prob = psi.^2;                                    <span class="cm">% 概率密度 |ψ|²</span>
+
+<span class="cm">% ---- 类型2：康普顿散射 ----</span>
+lambda_C = h/(m_e*c);                            <span class="cm">% 康普顿波长 ≈ 2.426pm</span>
+lambda_in = 0.071e-9;                            <span class="cm">% 入射波长（按题给）</span>
+theta = linspace(0, pi, 500);
+lambda_out = lambda_in + lambda_C*(1 - cos(theta)); <span class="cm">% 散射公式</span>
+K_e = h*c*(1/lambda_in - 1./lambda_out) / e;      <span class="cm">% 电子动能(eV)，/e把J→eV</span>
+
+<span class="cm">% ---- 类型3：德布罗意波长 ----</span>
+U = 10000;                                       <span class="cm">% 加速电压(V)</span>
+lambda = h / sqrt(2*m_e*e*U);                    <span class="cm">% 非相对论。U>20kV需加相对论修正</span>
+fprintf(<span class="st">'λ = %.2f pm\n'</span>, lambda*1e12);           <span class="cm">% 1pm = 1e-12m</span>
+
+figure; plot(x*1e9, psi);                        <span class="cm">% 横轴转nm单位(×1e9)</span>
+xlabel(<span class="st">'x(nm)'</span>); ylabel(<span class="st">'ψ'</span>); grid on;</pre>
+
+<p class="desc"><b>单位换算必记：</b>1nm=1e-9m, 1pm=1e-12m, 1eV=1.602e-19J, 1μT=1e-6T。画图时横轴通常用nm/pm/μm。</p>
+
+<!-- ---- 数据处理 ---- -->
+<h3>模板E：数据处理题（插值、拟合、FFT、求零点、求极值）</h3>
+<p class="desc">纯数学操作，不涉及物理方程。直接调MATLAB内置函数。</p>
+
+<pre><span class="cm">% ==== 数据处理通用模板 ====</span>
+clear; close all;
+
+<span class="cm">% ---- 插值 ----</span>
+x = [0,1,2,3,4];  y = [1,3,2,5,4];               <span class="cm">% 已知数据点</span>
+xi = 0:0.1:4;                                    <span class="cm">% 要插值的点</span>
+yi = interp1(x, y, xi, <span class="st">'spline'</span>);               <span class="cm">% 'spline'可换'linear''pchip''nearest'</span>
+plot(x, y, <span class="st">'o'</span>, xi, yi, <span class="st">'-'</span>);                      <span class="cm">% 原始点+插值曲线</span>
+
+<span class="cm">% ---- 多项式拟合 ----</span>
+p = polyfit(x, y, 2);                            <span class="cm">% 2次拟合，p=[a,b,c]表示ax²+bx+c</span>
+y_fit = polyval(p, xi);                          <span class="cm">% 计算拟合值</span>
+plot(xi, y_fit);                                  <span class="cm">% 画拟合曲线</span>
+
+<span class="cm">% ---- 指数拟合（先取对数再polyfit）----</span>
+y_log = log(y);                                  <span class="cm">% y=Ae^{Bx} → ln(y)=ln(A)+Bx</span>
+p_exp = polyfit(x, y_log, 1);                    <span class="cm">% 线性拟合</span>
+A = exp(p_exp(2));  B = p_exp(1);                <span class="cm">% 还原系数</span>
+
+<span class="cm">% ---- 求零点 ----</span>
+f = @(x) x.^2 - 2;                               <span class="cm">% 要求解的函数 f(x)=0</span>
+root = fzero(f, 1);                              <span class="cm">% 从x=1附近开始找根</span>
+root2 = fzero(f, [0, 2]);                         <span class="cm">% 或在[0,2]区间找（端点异号才有效）</span>
+all_roots = roots([1, 0, -3, 5]);                <span class="cm">% 多项式所有根：x³-3x+5=0</span>
+
+<span class="cm">% ---- 求极小值 ----</span>
+f2 = @(x) (x-3).^2 + 2;                           <span class="cm">% 要最小化的函数</span>
+x_min = fminbnd(f2, 0, 5);                        <span class="cm">% 在[0,5]内找极小值点</span>
+
+<span class="cm">% ---- FFT ----</span>
+Fs = 1000;  t_fft = 0:1/Fs:1;                     <span class="cm">% 采样频率1kHz，时长1s</span>
+signal = sin(2*pi*50*t_fft) + sin(2*pi*120*t_fft);<span class="cm">% 50Hz+120Hz合成信号</span>
+Y = fft(signal);                                 <span class="cm">% 做FFT</span>
+Pyy = abs(Y).^2 / length(Y);                     <span class="cm">% 功率谱</span>
+f = Fs*(0:length(Y)/2)/length(Y);                <span class="cm">% 频率轴（只取前半）</span>
+plot(f, Pyy(1:length(f)));                       <span class="cm">% 画频谱</span>
+xlabel(<span class="st">'f(Hz)'</span>); ylabel(<span class="st">'功率'</span>);</pre>
+
+<!-- ---- 通用作图 ---- -->
+<h3>模板F：通用作图代码块（所有题都要用）</h3>
+<pre><span class="cm">% ==== 最常用的作图命令 ====</span>
+figure(<span class="st">'Name'</span>, <span class="st">'图名'</span>);                            <span class="cm">% 创建新图窗口</span>
+
+<span class="cm">% 子图布局</span>
+subplot(行数, 列数, 序号);                        <span class="cm">% 如 subplot(2,2,1) 表示2×2的第1个</span>
+
+<span class="cm">% 画曲线</span>
+plot(x, y, <span class="st">'b-'</span>, <span class="st">'LineWidth'</span>, 1.5);              <span class="cm">% 蓝实线,线宽1.5</span>
+plot(x, y, <span class="st">'ro'</span>, <span class="st">'MarkerSize'</span>, 5);                <span class="cm">% 红圆点,大小5</span>
+hold on;                                         <span class="cm">% 叠加画下一条曲线</span>
+hold off;                                        <span class="cm">% 结束叠加</span>
+
+<span class="cm">% 标签（必须写，否则扣分）</span>
+xlabel(<span class="st">'x轴含义 (单位)'</span>);
+ylabel(<span class="st">'y轴含义 (单位)'</span>);
+title(<span class="st">'图片标题'</span>);
+legend(<span class="st">'曲线1'</span>, <span class="st">'曲线2'</span>, <span class="st">'Location'</span>, <span class="st">'best'</span>);    <span class="cm">% 图例，best=自动放最佳位置</span>
+grid on;                                         <span class="cm">% 打开网格</span>
+
+<span class="cm">% 坐标轴范围</span>
+axis([xmin, xmax, ymin, ymax]);                   <span class="cm">% 手动设范围</span>
+axis equal;                                       <span class="cm">% x和y轴等比例（圆不变椭圆）</span>
+
+<span class="cm">% 双y轴（对比两个不同量纲的量）</span>
+yyaxis left;  plot(x, y1, <span class="st">'b-'</span>);  ylabel(<span class="st">'左边y轴'</span>);
+yyaxis right; plot(x, y2, <span class="st">'r--'</span>); ylabel(<span class="st">'右边y轴'</span>);
+
+<span class="cm">% 画二维彩色图</span>
+imagesc(x, y, Z);                                <span class="cm">% Z是二维矩阵，颜色代表值</span>
+pcolor(X, Y, Z); shading interp;                  <span class="cm">% 伪彩色图，平滑插值</span>
+colormap(jet); colorbar;                          <span class="cm">% 设颜色映射+显示色标</span>
+
+<span class="cm">% 特殊坐标</span>
+loglog(x, y);                                     <span class="cm">% 双对数坐标</span>
+semilogx(x, y);                                   <span class="cm">% x对数，y线性</span>
+semilogy(x, y);                                   <span class="cm">% y对数，x线性</span>
+polarplot(theta, r);                              <span class="cm">% 极坐标</span>
+
+<span class="cm">% 输出数值结果</span>
+fprintf(<span class="st">'结果是 %.4f\n'</span>, 变量名);               <span class="cm">% 格式化输出，%.4f=4位小数</span></pre>
+
+<p class="desc"><b>考试提醒：</b>每张图都要有xlabel、ylabel、title、grid on。legend在两条以上曲线时必加。subplot画多个子图比每张新开figure更容易在一页内排版。</p>
+
+<!-- ---- 速查 ---- -->
+<h3>模板速查卡：看到什么题→用哪个模板</h3>
+<table style="font-size:10pt">
+<tr><th>题目特征</th><th>用哪个模板</th><th>核心函数</th></tr>
+<tr><td>抛体、振动、滑落、摆、船减速</td><td>A 力学</td><td>ode45 + odeset('Events')</td></tr>
+<tr><td>干涉条纹、衍射图样、光强分布</td><td>B 光学</td><td>光强公式 + plot</td></tr>
+<tr><td>磁场、安培力、感应电动势、互感</td><td>C 电磁</td><td>integral + gradient</td></tr>
+<tr><td>势阱能级、康普顿、德布罗意波</td><td>D 量子</td><td>解析公式 + 单位换算(eV↔J)</td></tr>
+<tr><td>插值、拟合、FFT、求根、求极值</td><td>E 数据处理</td><td>interp1/polyfit/fft/fzero/fminbnd</td></tr>
+<tr><td>需要画图</td><td>F 作图</td><td>subplot + plot + 标注</td></tr>
+</table>
+
+</body>
+</html>
